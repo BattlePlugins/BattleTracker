@@ -12,7 +12,6 @@ import mc.alk.tracker.objects.SpecialType;
 import mc.alk.util.InventoryUtil;
 import mc.alk.v1r7.controllers.MC;
 
-import net.minecraft.server.v1_12_R1.Items;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -138,6 +137,7 @@ public class MessageController {
                 List<String> wpnLore = null;
 		if (weapon != null){
 			node = "pvp."+ weapon.getType().name().toLowerCase();
+			// This line of code causes problems when a player kills itself through enderpearl use.
 			wpnName = InventoryUtil.getCustomName(weapon);
                         wpnLore = weapon.getItemMeta().getLore();
 			messages = config.getStringList(node);
