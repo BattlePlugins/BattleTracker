@@ -38,7 +38,6 @@ public class TrackerEvent extends Event{
 	public void callSyncEvent(){
 		final Event event = this;
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Tracker.getSelf(), new Runnable(){
-			@Override
 			public void run() {
 				Bukkit.getServer().getPluginManager().callEvent(event);
 			}

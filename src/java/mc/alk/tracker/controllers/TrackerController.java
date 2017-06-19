@@ -27,7 +27,6 @@ public class TrackerController {
 			dontTrack.add(playername);
 		} else {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Tracker.getSelf(), new Runnable(){
-				@Override
 				public void run() {
 					dontTrack.add(playername);
 				}
@@ -39,7 +38,6 @@ public class TrackerController {
 			dontTrack.remove(playername);
 		} else {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Tracker.getSelf(), new Runnable(){
-				@Override
 				public void run() {
 					dontTrack.remove(playername);
 				}
@@ -51,7 +49,6 @@ public class TrackerController {
 			dontAnnounce.add(playername);
 		} else {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Tracker.getSelf(), new Runnable(){
-				@Override
 				public void run() {
 					dontAnnounce.add(playername);
 				}
@@ -64,7 +61,6 @@ public class TrackerController {
 			dontAnnounce.remove(playername);
 		} else {
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Tracker.getSelf(), new Runnable(){
-				@Override
 				public void run() {
 					dontAnnounce.remove(playername);
 				}

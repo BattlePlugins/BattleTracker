@@ -85,7 +85,6 @@ public class Tracker extends MCPlugin {
 		/// on some servers with non bukkit worlds, this is too quick. delay this till after all plugins
         /// are loaded
         Bukkit.getScheduler().scheduleSyncDelayedTask(this, new Runnable() {
-            @Override
             public void run() {
                 signSerializer = new SignSerializer(signController);
                 signSerializer.setConfig(getDataFolder().getPath() + "/signs.yml");
@@ -108,7 +107,6 @@ public class Tracker extends MCPlugin {
             getServer().getPluginManager().registerEvents(new SignListener(signController), this);
 
             Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new Runnable() {
-                @Override
                 public void run() {
                     signController.updateSigns();
                 }

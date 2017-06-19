@@ -50,7 +50,6 @@ public class SignListener implements Listener{
 			timer.put(event.getPlayer().getName());
 			final Location l = block.getLocation();
 			Bukkit.getScheduler().scheduleSyncDelayedTask(Tracker.getSelf(), new Runnable(){
-				@Override
 				public void run(){
 					l.getWorld().getBlockAt(l).getState().update(true);
 				}
@@ -67,7 +66,7 @@ public class SignListener implements Listener{
 			return;}
 		Sign s = (Sign)block.getState();
 		final String l = s.getLine(0);
-		if (l == null || l.isEmpty() || l.charAt(0) != '[')
+		if (l == null || l.charAt(0) != '[')
 			return;
 		signController.removeSignAt(s.getLocation());
 	}
@@ -101,7 +100,6 @@ public class SignListener implements Listener{
 		}
 		signController.addSign(ss);
 		Bukkit.getScheduler().scheduleSyncDelayedTask(Tracker.getSelf(), new Runnable(){
-			@Override
 			public void run() {
 				signController.updateSigns();
 				Tracker.getSelf().saveConfig();
@@ -113,8 +111,8 @@ public class SignListener implements Listener{
 		/// Quick check to make sure this is even a stat sign
 		/// make sure first two lines are not null or empty.. line 1 starts with '['
 		if (lines.length < 2 ||
-				lines[0] == null || lines[0].isEmpty() || lines[0].charAt(0) != '[' ||
-				lines[1] == null || lines[1].isEmpty()){
+				lines[0] == null || lines[0].charAt(0) != '[' ||
+				lines[1] == null){
 			return null;}
 
 		/// find the Sign Type, like top, personal

@@ -12,6 +12,7 @@ import mc.alk.tracker.objects.SpecialType;
 import mc.alk.util.InventoryUtil;
 import mc.alk.v1r7.controllers.MC;
 
+import net.minecraft.server.v1_12_R1.Items;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -161,7 +162,7 @@ public class MessageController {
 		case RAMPAGE: node = "special.rampage." + nKills; break;
 		}
 		String message = config.getString(node);
-		if (message == null || message.isEmpty()){
+		if (message == null){
 			switch (type){
 			case STREAK: node = "special.streak.default"; break;
 			case RAMPAGE: node = "special.rampage.default"; break;

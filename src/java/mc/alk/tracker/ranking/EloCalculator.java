@@ -10,7 +10,6 @@ public class EloCalculator implements RatingCalculator {
 
 	float defaultElo, spread;
 
-	@Override
     public String getName(){
 		return "Elo";
 	}
@@ -24,7 +23,6 @@ public class EloCalculator implements RatingCalculator {
 		return eloChange;
 	}
 
-	@Override
     public void changeRatings(Stat p1, Stat p2, boolean tie){
 		float result = tie ? 0.5f : 1.0f;
 		final float eloChange = eloChange(p1,p2,result);
@@ -34,7 +32,6 @@ public class EloCalculator implements RatingCalculator {
 		p2.setRating(p2elo > MIN_ELO? p2elo : MIN_ELO);
 	}
 
-	@Override
     public void changeRatings(Stat ts1, Collection<Stat> teamstats, boolean tie) {
 		float result = tie ? 0.5f : 1.0f;
 		double eloWinner = 0;
@@ -65,12 +62,10 @@ public class EloCalculator implements RatingCalculator {
 		this.spread = spread;
 	}
 
-	@Override
     public void setDefaultRating(float elo) {
 		defaultElo = elo;
 	}
 
-	@Override
     public float getDefaultRating() {
 		return defaultElo;
 	}

@@ -113,7 +113,6 @@ public class SignController {
 			return;
 		/// Sort based on stattype
 		Collections.sort(statsigns, new Comparator<StatSign>(){
-			@Override
 			public int compare(StatSign arg0, StatSign arg1) {
 				if (arg0.getStatType() == null && arg1.getStatType() == null) return 0;
 				else if (arg1.getStatType() == null ) return -1;
@@ -235,7 +234,6 @@ public class SignController {
 	private void updateSigns(final TrackerInterface ti,
 			final List<StatSign> update, final int max, final StatType type, final int offset) {
 		Bukkit.getScheduler().scheduleAsyncDelayedTask(Tracker.getSelf(), new Runnable(){
-			@Override
 			public void run() {
 				List<Stat> toplist= ti.getTopX(type, max * 4);
 				if (toplist != null && !toplist.isEmpty() && Tracker.getSelf().isEnabled()){
@@ -257,7 +255,6 @@ public class SignController {
 			this.statList = toplist;
 		}
 
-		@Override
 		public void run() {
 			for (StatSign ss: statSignList){
 				Sign s = getSign(ss.getLocation());

@@ -134,7 +134,6 @@ public class TrackerImpl implements TrackerInterface, CacheSerializer<String,Sta
 			_addStatRecord(new StatChange(team1,team2,wlt,changeWinLossRecords));
 		} else {
 			Bukkit.getScheduler().scheduleAsyncDelayedTask(Tracker.getSelf(), new Runnable(){
-				@Override
 				public void run() {
 					_addStatRecord(new StatChange(team1,team2,wlt,changeWinLossRecords));
 				}
@@ -417,7 +416,6 @@ public class TrackerImpl implements TrackerInterface, CacheSerializer<String,Sta
 		cache.save();
 		return sql.getVersusRecords(name,name2,x);
 	}
-	@Override
 	public List<WLTRecord> getWinsSince(Stat stat, Long time) {
 		cache.save();
 		return sql.getWinsSince(stat.getName(),time);
@@ -493,17 +491,14 @@ public class TrackerImpl implements TrackerInterface, CacheSerializer<String,Sta
 		}
 
 	}
-	@Override
 	public int getRecordCount() {
 		return sql.getRecordCount();
 	}
 
-	@Override
 	public Version getVersion() {
 		return Tracker.getVersionObject();
 	}
 
-	@Override
 	public Integer getRank(OfflinePlayer sender) {
 		cache.save();
 		Stat s = getPlayerRecord(sender);
@@ -512,7 +507,6 @@ public class TrackerImpl implements TrackerInterface, CacheSerializer<String,Sta
 		return sql.getRanking(s.getRating(),s.getCount());
 	}
 
-	@Override
 	public Integer getRank(String team) {
 		cache.save();
 		Stat s = getRecord(team);
@@ -521,7 +515,6 @@ public class TrackerImpl implements TrackerInterface, CacheSerializer<String,Sta
 		return sql.getRanking(s.getRating(),s.getCount());
 	}
 
-	@Override
 	public boolean hidePlayer(String player, boolean hide) {
 		Stat s = getPlayerRecord(player);
 		if (s==null)
@@ -531,7 +524,6 @@ public class TrackerImpl implements TrackerInterface, CacheSerializer<String,Sta
 		return true;
 	}
 
-	@Override
 	public boolean isModified(){
 		return cache.isModified();
 	}
