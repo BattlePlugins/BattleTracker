@@ -21,90 +21,164 @@
 # &d  Pink
 # &e  Yellow
 # &f  White
-version: 1.0.1
+version: 1.1.0
 pve:
   prefix: "&e[PvE]&f "
   meleeDeaths:
-    - "&6%d&f was killed by a &6%k&f"
+    - "&6%d&f was killed by a &6%k&f."
   rangeDeaths:
-    - "&6%d&f was killed by a &6%k&f"
+    - "&6%d&f was killed by a &6%k&f."
   fire: 
-    - "&6%d&f was fried to a crisp"
-    - "&6%d&f burned to death"
+    - "&6%d&f was fried to a crisp."
+    - "&6%d&f burned to death."
+    - "People hoped &6%d&f would take \"you're hot\" literally."
   fire_tick:
-    - "&6%d&f tried to extinguish the flames, but failed"
+    - "&6%d&f tried to extinguish the flames, but failed."
+    - "&6%d&f couldn't find any water to jump into."
+    - "The fire turned &6%d&f into a hash brown."
+  fly_into_wall:
+    - "&6%d&f flew into a wall too fast."
+    - "&6%d&f thought its head was tough as steel."
+  custom:
+    - "&6%d&f committed suicide."
+    - "&6%d&f chose not to continue with its life."
   lava:
-    - "&6%d&f was no match for a pool of lava"
+    - "&6%d&f was no match for a pool of lava."
+    - "&6%d&f mistook a lava pool for a swimming pool."
   fall:
-    - "&6%d&f found out what the ground feels like"
+    - "&6%d&f found out what the ground feels like."
+    - "&6%d&l said \"I BELIEVE I CAN FLY!\" when he jumped off a high ledge."
   contact:
-    - "&6%d&f should learn to not jump on a cactus"
+    - "&6%d&f should learn to not jump on a &2cactus&f."
+    - "&6%d&f thought a &2cactus&f is a tree."
+    - "The &2cactus&f pricked &6%d&f to death."
   block_explosion:
-    - "&6%d&f has been shredded by TNT"
+    - "&6%d&f has been shredded by TNT."
+    - "&6%d&f was too close to the TNT blast."
   primedtnt:
-    - "&6%d&f has been shredded by TNT"
+    - "&6%d&f has been shredded by TNT."
+    - "&6%d&f didn't escape the TNT in time."
   suffocation:
-    - "&6%d&f ran out of breath"
+    - "&6%d&f ran out of breath."
+    - "&6&d&f suffocated in a wall."
   starvation:
-    - "&6%d&f should learn to eat"
+    - "&6%d&f should learn to eat."
+    - "&6%d&f ran out of food."
+    - "&6%d&f starved itseld to death."
   unknown:
-    - "&6%d&f has died of unknown causes"
+    - "&6%d&f has died of unknown causes."
+    - "Life ended for &6%d&f for unknown reasons."
   lightning:
-    - "&6%d&f was struck down by a bolt of lightning"
+    - "&6%d&f was struck down by a bolt of lightning."
+    - "&eHercules&f decided to smite &6%d&f."
   suicide:
-    - "hari kari suited &6%d&f"
-    - "&6%d&f chose the ignoble way out"
+    - "Hari kari suited &6%d&f."
+    - "&6%d&f chose the ignoble way out."
+    - "&6%d&f ended its own life."
+    - "&6%d&f got too depressed."
   drowning:
-    - "&6%d&f needs to learn to swim"
-    - "dog paddling wasn't enough for &6%d&f"
-    - "&2water&f was the end of poor &6%d&f"
+    - "&6%d&f needs to learn to swim."
+    - "Dog paddling wasn't enough for &6%d&f."
+    - "&2water&f was the end of poor &6%d&f."
+    - "&6%d&f ran out of oxygen underwater."
   void:
-    - "The &0void&f has claimed &6%d&f"
+    - "The &0void&f has claimed &6%d&f."
+    - "&6%d&f fell out of the world."
   creeper:
-    - "The &2creeper&f blast vaporized &6%d&f"
+    - "The &2creeper&f blast vaporized &6%d&."
+    - "&6%d&f was deceived by a &2creeper&f."
   zombie:
-    - "&6%d&f has left this world as a &2zombie"
-    - "&2Zombies&f have devoured &6%d&f"
-    - "The &2zombie&f horde have claimed &6%d&f"
+    - "&6%d&f has left this world as a &2zombie."
+    - "The &2zombies&f have devoured &6%d&f."
+    - "The &2zombie&f horde have claimed &6%d&f."
   skeleton:
-    - "&6%d&f was pierced by a &7skeleton&f arrow"
-    - "&6%d&f was no match for the &7skeleton&f"
+    - "A &7skeleton taught &6%d&f a lesson."
+    - "&6%d&f was no match for the &7skeleton&f."
   spider:
-    - "Spiders have drained &6%d&f"
+    - "Spiders have drained the &4blood&f of &6%d&f."
+    - "&6%d&f got pounced by a spider."
   cavespider:
-    - "Cavespiders have swarmed &6%d&f"
+    - "Cavespiders have swarmed &6%d&f."
   enderdragon:
-    - "The &8ender dragon&f has annihilated &6%d&f"
+    - "The &5Ender &8Dragon&f has annihilated &6%d&f."
+    - "&6%d&l didn't watch out for the &5Ender &8Dragon&f's breath."
   blaze:
-    - "The &4blaze&f has crisped &6%d&f"
+    - "The &6blaze&f have burned &6%d&f to a crisp."
+    - "&6%d&f wasn't fireproof for the &6blaze&f."
   silverfish:
-    - "&6%d&f was overwhelmed by silverfish"
+    - "&6%d&f was overwhelmed by silverfish."
+    - "&6%d&f thought silverfish weren't deadly."
   enderman:
-    - "&8Endermen&f have taken &6%d&f to the nether"
-    - '&6%d&f looked into the eyes of the&8Endermen'
+    - "&5Ender&8men&f have taken &6%d&f to the nether."
+    - '&6%d&f looked into the eyes of the&5Ender&8men.'
   snowman:
-    - '&8Endermen&f have taken &6%d&f to the nether'
+    - 'The snowmen have buried &6%d&f in snow.'
+    - "Apparently, &6%d&f thought punching a snowman was a good idea."
   ozelot:
-    - 'The cute ocelot showed its power to &6%d&f'
-    - '&6%d&f discovered that ocelots have fangs'
+    - 'The cute ocelot showed its power to &6%d&f.'
+    - '&6%d&f discovered that ocelots have fangs.'
   anvil:
-    - '&6%d&f was crushed by an anvil'
-    - '&6%d&f found to use anvils, not stand under them'
+    - '&6%d&f was crushed by an anvil.'
+    - '&6%d&f found to use anvils, not stand under them.'
   wolf:
-    - "&6%d&f was hunted down by the pack"
-    - "&6%d&f was devored by wolves"
+    - "&6%d&f was hunted down by the pack."
+    - "&6%d&f was devoured by wolves."
+    - "&6%d&f didn't learn his lesson on hitting wolves."
   giant:
-    - "&6%d&f was smashed by a Giant"
-    - "A giant has flattened &6%d&f"
+    - "&6%d&f was smashed by a Giant."
+    - "A giant has flattened &6%d&f."
+    - "&6%d&f found out what it feels like to be stepped on."
   slime:
-    - "&6%d&f was liquified by a &aslime"
-    - "&6%d&f was enveloped by &aslime"
+    - "&6%d&f was liquified by a &aslime."
+    - "&6%d&f was enveloped by a &aslime."
+    - "&6%d&f assumed big &aslime&f were harmless."
   ghast:
-    - "&6%d&f was burned by ghasts"
+    - "&6%d&f was burned by ghasts."
+    - "&6%d&f got &6fireballed&f by a ghast."
+    - "&6%d&f didn't know you could deflect fireballs from ghasts."
   pigzombie:
-    - "The PigZombie horde has claimed &6%d&f"
+    - "The Zombie Pigmen horde have claimed &6%d&f."
+    - "&6%d&f didn't know Zombie Pigmen were strong in numbers."
+    - "The Zombie Pigmen united against &6%d&f."
   lavaslime:
-    - "&6%d&f has been lavaslimed!"
+    - "&6%d&f has been killed by a &6lava&aslime!"
+    - "&6%d&f found out there's more than one kind of &aslime."
+  vex:
+    - "&6%d&f got vexed."
+    - "&6%d&f was killed by the &8Evoker&f's minions."
+  evocation_fangs:
+    - "&6%d&f got killed by the fangs from below."
+    - "&6%d&f didn't know Evokers can do more than call upon vexes."
+  witch:
+    - "&6%d&f got killed by a &4Witch&f."
+    - "The witches have defeated &6%d&f with their lethal brews!"
+  shulker:
+    - "&6%d&f mistook a Shulker for a harmless box."
+    - "&6%d&f failed to defeat a box."
+  polar_bear:
+    - "&6%d&f didn't know animals lived in cold places now."
+    - "The mother polar bear ate &6%d&f for &elunch."
+    - "The baby polar bears called their mom to kill &6%d&f."
+  guardian:
+    - "The guardians of the ocean monuments killed &6%d&f!"
+    - "&6%d&f didn't realize ocean monuments are guarded!"
+  elder_guardian:
+    - "The leader of guardians killed &6%d&f quickly!"
+    - "&6%d&f didn't realize guardians have elders."
+    - "&6%d&f underestimated a guardian for its old age."
+  endermite:
+    - "&6%4&f didn't watch for &5ender&8mites&f."
+    - "The great &5ender&8mites claimed &6%d&f!"
+  vindication_illager:
+    - "&6%d&f pissed off a Vindicator."
+    - "The Vindictor struck &6%d&f with great force!"
+  Stray:
+    - "&6%d&f pissed off a Stray skeleton."
+    - "&6%d&f got shot by a stronger variant of a skeleton."
+  wither_skeleton:
+    - "&6%d&f didn't know &8wither &7skeletons &fexisted in the nether."
+    - "&6%d&l died by the sword of a &8wither &7skeleton&f."
+
 pvp:
   prefix: "&4[PvP]&f "
   meleeDeaths:
@@ -113,7 +187,7 @@ pvp:
     - "&6%k&f has overpowered &6%d&f in combat!"
     - "&6%k&f killed &6%d&f with a &6%i&f!"
     - "&6%k&f's &6%i&f has ended poor &6%d&f!"
-    - "&6%k&f evicerated &6%d&f!"
+    - "&6%k&f eviscerated &6%d&f!"
     - "&6%k&f had fun slicing and dicing &6%d&f!"
     - "&6%k&f sent &6%d&f to pay Charon!"
     - "&6%k&f impaled &6%d&f with a &6%i&f!"
@@ -129,23 +203,29 @@ pvp:
     - "&6%k&f has riddled &6%d&f with arrows!"
     - "With a well aimed shot &6%k&f punctured &6%d&f's heart!"
   bow:
-    - '&6%k&f feathered &6%d&f with arrows from &e%i &5%l'
-    - '&6%k&fs arrow pierced through &6%d&f with &e%i &5%l'
+    - '&6%k&f feathered &6%d&f with arrows from &e%i &5%l!'
+    - "&6%k&f's arrow pierced through &6%d&f with &e%i &5%l!"
+    - '&6%k&f knows how to shoot &6%d&f really well.'
   air:
     - "&6%k&f pummeled &6%d&f with their bare hands!"
-    - "&6%d&f was no match for the combat skills of &6%k&f"
-    - "&6%k&f showed &6%d&f that fists are weapons too"
-    - "&6%k&f fists broke down &6%d&f"
+    - "&6%d&f was no match for the combat skills of &6%k&f!"
+    - "&6%k&f showed &6%d&f that fists are weapons too!"
+    - "&6%k&f fists broke down &6%d&f!"
+    - "&6&d&f got a death punch in the face by &6%d&f!"
   diamond_sword:
-    - "&6%k&f sliced through &6%d&f with a &6%i&f"
-    - "&6%k&f's &6%i&f split &6%d&f in two"
+    - "&6%k&f sliced through &6%d&f with a &6%i&f!"
+    - "&6%k&f's &6%i&f split &6%d&f in two!"
+    - "&6%d&f got too cocky with &6%k&f's diamond sword!"
   iron_sword:
-    - "&6%k&f slayed &6%d&f with an &6%i&f"
+    - "&6%k&f slayed &6%d&f with an &6%i&f!"
+    - "&6%d&f didn't know &6%d&f could forge an &6%i&f!"
   wood_sword:
-    - "&6%k&f hacked &6%d&f to death with a &6%i&f"
+    - "&6%k&f hacked &6%d&f to death with a &6%i&f!"
+    - "&6%k&f stopped &6%d&f using a freshly-cut &6%i&f!"
   diamond_axe:
-    - "&6%k&f used &6%d&f as mere lumber"
-    - "&6%k&f cleaved &6%d&f with a &6%i&f"
+    - "&6%k&f used &6%d&f as mere lumber."
+    - "&6%k&f cleaved &6%d&f with a &6%i&f."
+    - "&6%k&f struck &6%d&f with great force!"
 
 special:
   rampage: 
