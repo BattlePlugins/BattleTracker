@@ -23,7 +23,7 @@
 # &f  White
 version: 1.1.0
 pve:
-  prefix: "&e[PvE]&f "
+  prefix: "&e[&2PvE]&f "
   meleeDeaths:
     - "&6%d&f was killed by a &6%k&f."
   rangeDeaths:
@@ -39,15 +39,17 @@ pve:
   fly_into_wall:
     - "&6%d&f flew into a wall too fast."
     - "&6%d&f thought its head was tough as steel."
+    - "&6&d&f didn't look in front while flying and crashed."
   custom:
     - "&6%d&f committed suicide."
     - "&6%d&f chose not to continue with its life."
+    - "&6%d&f 
   lava:
     - "&6%d&f was no match for a pool of lava."
     - "&6%d&f mistook a lava pool for a swimming pool."
   fall:
     - "&6%d&f found out what the ground feels like."
-    - "&6%d&l said \"I BELIEVE I CAN FLY!\" when he jumped off a high ledge."
+    - "&6%d&f said &4&l\"I BELIEVE I CAN FLY!\"&f (Apparently, the player cannot.)"
   contact:
     - "&6%d&f should learn to not jump on a &2cactus&f."
     - "&6%d&f thought a &2cactus&f is a tree."
@@ -177,8 +179,10 @@ pve:
     - "&6%d&f got shot by a stronger variant of a skeleton."
   wither_skeleton:
     - "&6%d&f didn't know &8wither &7skeletons &fexisted in the nether."
-    - "&6%d&l died by the sword of a &8wither &7skeleton&f."
-
+    - "&6%d&f died by the sword of a &8wither &7skeleton&f."
+  HOT_FLOOR:
+    - "&6%d&f stood on a hot floor for too long."
+    - "Someone didn't tell &6%d&f about the dangers of magma blocks."
 pvp:
   prefix: "&4[PvP]&f "
   meleeDeaths:
