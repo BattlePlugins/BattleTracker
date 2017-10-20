@@ -233,7 +233,7 @@ public class SignController {
 
 	private void updateSigns(final TrackerInterface ti,
 			final List<StatSign> update, final int max, final StatType type, final int offset) {
-		Bukkit.getScheduler().scheduleAsyncDelayedTask(Tracker.getSelf(), new Runnable(){
+		Bukkit.getScheduler().scheduleSyncDelayedTask(Tracker.getSelf(), new Runnable(){
 			public void run() {
 				List<Stat> toplist= ti.getTopX(type, max * 4);
 				if (toplist != null && !toplist.isEmpty() && Tracker.getSelf().isEnabled()){

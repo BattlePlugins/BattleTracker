@@ -27,6 +27,10 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * The main class file of BattleTracker.
+ */
+
 public class Tracker extends MCPlugin {
 
     static Tracker plugin;

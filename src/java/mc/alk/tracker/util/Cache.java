@@ -20,7 +20,7 @@ import org.apache.commons.lang.mutable.MutableBoolean;
  * @param <Value>
  */
 public class Cache <Key, Value> {
-	public static final String version = "1.2";
+	public static final String version = "1.3";
 	public static final boolean DEBUG = false;
 
 	/**
@@ -150,7 +150,7 @@ public class Cache <Key, Value> {
 
 	/**
 	 * get a cache object using the key from the given param
-	 * @param type
+	 * @param obj
 	 * @return
 	 */
 	public Value get(UniqueKey<Key> obj){
@@ -209,7 +209,7 @@ public class Cache <Key, Value> {
 
 	/**
 	 * Specify that a cache object is 'dirty' and needs to be saved to db
-	 * @param key
+	 * @param keys
 	 */
 	public void setDirty(Key... keys) {
 		modified = true;
@@ -259,7 +259,7 @@ public class Cache <Key, Value> {
 	}
 	/**
 	 * Explicitly save
-	 * @param element
+	 * @param key
 	 */
 	public void save(Key key) {
 		List<UniqueKey<Key>> types = new ArrayList<UniqueKey<Key>>(1);

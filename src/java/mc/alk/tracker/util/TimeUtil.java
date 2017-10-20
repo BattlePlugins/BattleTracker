@@ -5,13 +5,13 @@ import java.util.TimeZone;
 
 
 public class TimeUtil {
-	static final String version = "1.0"; 
+	static final String version = "1.1";
 	static long lastCheck = 0;
 	
 	public static String convertMillisToString(long t){
 		return convertSecondsToString(t/1000);
 	}
-	public static String convertSecondsToString(long t){
+	private static String convertSecondsToString(long t){
 		long s = t % 60;
 		t /= 60;
 		long m = t %60;
@@ -44,18 +44,18 @@ public class TimeUtil {
 	    return convertSecondsToString(t);
 	}
 	
-	public static String dayOrDays(long t){
+	private static String dayOrDays(long t){
 		return t > 1 || t == 0? "days" : "day";
 	}
 
-	public static String hourOrHours(long t){
+	private static String hourOrHours(long t){
 		return t > 1 || t ==0 ? "hours" : "hour";
 	}
 
-	public static String minOrMins(long t){
+	private static String minOrMins(long t){
 		return t > 1 || t == 0? "minutes" : "minute";
 	}
-	public static String secOrSecs(long t){
+	private static String secOrSecs(long t){
 		return t > 1 || t == 0? "sec" : "secs";
 	}
 

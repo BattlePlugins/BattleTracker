@@ -13,10 +13,12 @@ import mc.alk.util.InventoryUtil;
 import mc.alk.v1r7.controllers.MC;
 
 import org.apache.commons.lang.StringUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 /**
  *
@@ -129,17 +131,17 @@ public class MessageController {
 		String msg = messages.get(r.nextInt(messages.size()));
 		return formatMessage(PVE_PREFIX, msg,killer,target, weapon, null);
 	}
-
+	// This method has some very extreme problems, regardless.
 	public static String getPvPMessage(boolean melee, String killer, String target, ItemStack weapon){
 		String node=null;
 		List<String> messages = null;
 		String wpnName = null;
-                List<String> wpnLore = null;
+		List<String> wpnLore = null;
+
 		if (weapon != null){
 			node = "pvp."+ weapon.getType().name().toLowerCase();
-			// This line of code causes problems when a player kills itself through enderpearl use.
 			wpnName = InventoryUtil.getCustomName(weapon);
-                        wpnLore = weapon.getItemMeta().getLore();
+			wpnLore = weapon.getItemMeta().getLore();
 			messages = config.getStringList(node);
 		}
 		if (messages == null || messages.isEmpty()){

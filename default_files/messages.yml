@@ -43,7 +43,7 @@ pve:
   custom:
     - "&6%d&f committed suicide."
     - "&6%d&f chose not to continue with its life."
-    - "&6%d&f 
+    - "&6%d&f got too depressed."
   lava:
     - "&6%d&f was no match for a pool of lava."
     - "&6%d&f mistook a lava pool for a swimming pool."
@@ -66,13 +66,15 @@ pve:
   starvation:
     - "&6%d&f should learn to eat."
     - "&6%d&f ran out of food."
-    - "&6%d&f starved itseld to death."
+    - "&6%d&f starved to death."
   unknown:
     - "&6%d&f has died of unknown causes."
     - "Life ended for &6%d&f for unknown reasons."
+    - "&6%d&f suffered a mysterious death."
   lightning:
     - "&6%d&f was struck down by a bolt of lightning."
     - "&eHercules&f decided to smite &6%d&f."
+    - "&6%d&f failed to survive a thunderstorm."
   suicide:
     - "Hari kari suited &6%d&f."
     - "&6%d&f chose the ignoble way out."
@@ -81,8 +83,8 @@ pve:
   drowning:
     - "&6%d&f needs to learn to swim."
     - "Dog paddling wasn't enough for &6%d&f."
-    - "&2water&f was the end of poor &6%d&f."
-    - "&6%d&f ran out of oxygen underwater."
+    - "&bWater&f was the end of poor &6%d&f."
+    - "&6%d&f ran out of oxygen."
   void:
     - "The &0void&f has claimed &6%d&f."
     - "&6%d&f fell out of the world."
@@ -92,15 +94,18 @@ pve:
   zombie:
     - "&6%d&f has left this world as a &2zombie."
     - "The &2zombies&f have devoured &6%d&f."
-    - "The &2zombie&f horde have claimed &6%d&f."
+    - "The &2zombie&f horde has claimed &6%d&f."
   skeleton:
-    - "A &7skeleton taught &6%d&f a lesson."
+    - "A &7skeleton &ftaught &6%d&f a lesson."
     - "&6%d&f was no match for the &7skeleton&f."
+    - "A &7skeleton gave &6%d&f a bad time."
   spider:
     - "Spiders have drained the &4blood&f of &6%d&f."
     - "&6%d&f got pounced by a spider."
+    - "As it turns out, &6%d&f thought fighting a spider from below was a good idea. (It was not.)"
   cavespider:
-    - "Cavespiders have swarmed &6%d&f."
+    - "Cave spiders have swarmed &6%d&f."
+    - "No amount of fighting helped &6%d&f defeat cave spiders."
   enderdragon:
     - "The &5Ender &8Dragon&f has annihilated &6%d&f."
     - "&6%d&l didn't watch out for the &5Ender &8Dragon&f's breath."
@@ -111,7 +116,7 @@ pve:
     - "&6%d&f was overwhelmed by silverfish."
     - "&6%d&f thought silverfish weren't deadly."
   enderman:
-    - "&5Ender&8men&f have taken &6%d&f to the nether."
+    - "&5Ender&8men&f have taken &6%d&f to the end."
     - '&6%d&f looked into the eyes of the&5Ender&8men.'
   snowman:
     - 'The snowmen have buried &6%d&f in snow.'
@@ -170,19 +175,24 @@ pve:
     - "&6%d&f underestimated a guardian for its old age."
   endermite:
     - "&6%4&f didn't watch for &5ender&8mites&f."
-    - "The great &5ender&8mites claimed &6%d&f!"
+    - "The great &5ender&8mites &fhave claimed &6%d&f!"
   vindication_illager:
     - "&6%d&f pissed off a Vindicator."
     - "The Vindictor struck &6%d&f with great force!"
+    - "&6%d&f learned that Vindicators weren't interested in trading."
   Stray:
     - "&6%d&f pissed off a Stray skeleton."
     - "&6%d&f got shot by a stronger variant of a skeleton."
   wither_skeleton:
     - "&6%d&f didn't know &8wither &7skeletons &fexisted in the nether."
-    - "&6%d&f died by the sword of a &8wither &7skeleton&f."
+    - "&6%d&f died against a &8wither &7skeleton&f."
+    - "As it turns out, &7skeletons &fcan live in the nether, as &6%d&f died against one of them."
   HOT_FLOOR:
     - "&6%d&f stood on a hot floor for too long."
-    - "Someone didn't tell &6%d&f about the dangers of magma blocks."
+    - "Someone didn't tell &6%d&f about the dangers of standing on magma."
+  wither:
+    - "&6%d&f withered away."
+    - "&6%d&f found that wither was more than just &2poison&f."
 pvp:
   prefix: "&4[PvP]&f "
   meleeDeaths:
@@ -203,19 +213,24 @@ pvp:
     - "&6%k&f overcame &6%d&f in battle!"
     - "&6%k&f defeated &6%d&f in mighty struggle!"
     - "&6%k&f ended all dreams for &6%d&f!"
+    - "&6%k&f killed &6%d&f in the glory of battle!"
+    - "&6%f&f proved &6%d&f was not invincible!"
   rangeDeaths:
     - "&6%k&f has riddled &6%d&f with arrows!"
     - "With a well aimed shot &6%k&f punctured &6%d&f's heart!"
+    - "No amount of &6%d&f's melee skills could beat &6%k&f's shooting!"
   bow:
     - '&6%k&f feathered &6%d&f with arrows from &e%i &5%l!'
     - "&6%k&f's arrow pierced through &6%d&f with &e%i &5%l!"
     - '&6%k&f knows how to shoot &6%d&f really well.'
+    - "&6%k&f proved that primitive bows can still kill by killing &6%d&f!"
   air:
     - "&6%k&f pummeled &6%d&f with their bare hands!"
     - "&6%d&f was no match for the combat skills of &6%k&f!"
     - "&6%k&f showed &6%d&f that fists are weapons too!"
     - "&6%k&f fists broke down &6%d&f!"
-    - "&6&d&f got a death punch in the face by &6%d&f!"
+    - "&6%d&f got a death punch in the face by &6%d&f!"
+    - "&6%d&f died against the unarmed &6%k&f!"
   diamond_sword:
     - "&6%k&f sliced through &6%d&f with a &6%i&f!"
     - "&6%k&f's &6%i&f split &6%d&f in two!"
@@ -226,6 +241,7 @@ pvp:
   wood_sword:
     - "&6%k&f hacked &6%d&f to death with a &6%i&f!"
     - "&6%k&f stopped &6%d&f using a freshly-cut &6%i&f!"
+    - "&6%k&f broke down &6%d&f using just a primitive &6%i&f!"
   diamond_axe:
     - "&6%k&f used &6%d&f as mere lumber."
     - "&6%k&f cleaved &6%d&f with a &6%i&f."
