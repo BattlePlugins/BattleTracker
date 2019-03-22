@@ -1,16 +1,36 @@
-A SQL tracker for minecraft.  allows overall stats, tallies, and  individual records.
+![BattleTracker](https://wiki.battleplugins.org/images/0/0c/BattleTracker.png "BattleTracker")
+==========
 
-Versions:
-2.1.2: New getRank function 
-2.1.1: Fix for VersusRecord when teams had names > 32 chars long..
-2.1: Added support for sqlite. Added new methods for the BattleTracker Interface
+An SQL tracker for Minecraft and [BattleArena](https://github.com/BattlePlugins/BattleArena). Allows overall stats, tallies, and individual records.
+
+Reporting Issues:
+---------
+We have had problems with bug reports that lack sufficient information.
+
+
+The problem is that people aren't giving us enough information to 
+replicate bugs. If we cannot identify exactly under what conditions 
+a bug is present, then it becomes harder to fix. 
+
+
+Please, if you report a bug, provide ample information about your situation. 
+
+
+If you need an answer in a timely manner, please contact us on [Discord](https://discord.gg/tMVPVJf): 
+
+We really appreciate when you report bugs, and we would like you to report them to us whenever you find them.
+However please be mindful of the information that you give us and/or how you contact us. If you really have no 
+idea where to start, maybe a 1 on 1 conversation on Discord may be the way to go. If you know exactly how to replicate your problem, or 
+you have a good amount of information about it, creating a new issue might be a better solution:
+
+
+* https://github.com/BattlePlugins/BattleTracker/issues
 
 Links
 ------------
-IRC Help:
-* [#BattleDev](http://irc.battleplugins.org/Developer/Git): For all developer (API and Coding) help and support, go here!
-* [#BattlePlugins](http://irc.battleplugins.org/Support/Git): For all Plugin related help and support questions, go here!
-* [#BattleBotDev](http://irc.battleplugins.org/Bot/): For all BattleBot Development, go here!
+Live Chat on Discord:
+* [BattlePlugins Dev](https://discord.gg/tMVPVJf): Join our Discord server to get support, talk about dev stuff, or just say hi!
+
 
 Battle Arena Links:
 * [Bukkit Page](http://dev.bukkit.org/bukkit-plugins/battlearena2/) (BattleArena on Bukkit!)
@@ -22,6 +42,6 @@ Battle Tracker Links:
 
 Other Links:
 * [BattleWiki](http://wiki.battleplugins.org) (Support Wiki)
-* [Ci Server](http://ci.battleplugins.org) (Ci Build Server)
-* [Battle Plugin Donations](http://donate.battleplugins.org) (Donation link)
-* [JavaDocs](http://null) (WIP)
+* ~~[Ci Server] (Jenkins Build Server)~~ *Not currently in use
+* [Battle Plugin Donations] (Donation link, coming soon)
+* [JavaDocs](http://rainbowcraft.sytes.net/javadocs/battletracker/apidocs/) (WIP)
