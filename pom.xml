@@ -18,10 +18,6 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
         <repository>
-            <id>battleplugins-repo</id>
-            <url>http://server.battleplugins.com/maven/repository</url>
-        </repository>
-        <repository>
             <id>rainbowcraft-repo</id>
             <url>http://rainbowcraft.sytes.net/maven/repository/</url>
         </repository>
@@ -36,6 +32,18 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>mc.euro</groupId>
+            <artifactId>Version</artifactId>
+            <version>4.0.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>mc.euro</groupId>
+            <artifactId>BukkitAdapter</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>BattleCore</artifactId>
             <version>1.7</version>
@@ -44,13 +52,13 @@
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>BattleBukkitLib</artifactId>
-            <version>2.3.1</version>
+            <version>4.1.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>BattlePluginUpdater</artifactId>
-            <version>1.4.1</version>
+            <version>2.0</version>
             <scope>compile</scope>
         </dependency>
         <!-- unknown plugins that I had to add to the repo -->
@@ -111,20 +119,30 @@
                         <configuration>
                             <relocations>
                                 <relocation>
+                                    <pattern>mc.euro.version</pattern>
+                                    <shadedPattern>mc.alk.tracker.alib.version</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>mc.euro.bukkitadapter</pattern>
+                                    <shadedPattern>mc.alk.tracker.alib.bukkitadapter</shadedPattern>
+                                </relocation>
+                                <relocation>
                                     <pattern>mc.alk.v1r7</pattern>
                                     <shadedPattern>mc.alk.tracker.battlecore</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>mc.alk.util</pattern>
-                                    <shadedPattern>mc.alk.tracker.battlelib</shadedPattern>
+                                    <pattern>mc.alk.battlebukkitlib</pattern>
+                                    <shadedPattern>mc.alk.tracker.alib.battlebukkitlib</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>mc.alk.plugin.updater</pattern>
-                                    <shadedPattern>mc.alk.tracker.battleupdater</shadedPattern>
+                                    <pattern>mc.alk.battlepluginupdater</pattern>
+                                    <shadedPattern>mc.alk.tracker.alib.battlepluginupdater</shadedPattern>
                                 </relocation>
                             </relocations>
                             <artifactSet>
                                 <includes>
+                                    <include>mc.euro:Version</include>
+                                    <include>mc.euro:BukkitAdapter</include>
                                     <include>mc.alk:BattleCore</include>
                                     <include>mc.alk:BattleBukkitLib</include>
                                     <include>mc.alk:BattlePluginUpdater</include>
@@ -148,8 +166,8 @@
     </build>
     <distributionManagement>
         <repository>
-            <id>battleplugins-repo</id>
-            <url>scp://server.battleplugins.com/var/www/server.battleplugins.com/htdocs/maven/repository</url>
+            <id>rainbowcraft-repo</id>
+            <url>scp://rainbowcraft.sytes.net/var/www/maven/repository</url>
         </repository>
     </distributionManagement>
 </project>
