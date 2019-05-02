@@ -18,6 +18,7 @@ import mc.alk.tracker.serializers.YamlConfigUpdater;
 import mc.alk.tracker.serializers.YamlMessageUpdater;
 import mc.alk.v1r7.core.MCPlugin;
 import mc.alk.v1r7.core.Version;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.serialization.ConfigurationSerialization;
 
@@ -55,6 +56,8 @@ public class Tracker extends MCPlugin {
 
         PluginUpdater.update(this, bukkitId, this.getFile(), Defaults.AUTO_UPDATE, Defaults.ANNOUNCE_UPDATE);
         BTPluginListener.loadPlugins();
+
+        new Metrics(this);
     }
 
     @Override
