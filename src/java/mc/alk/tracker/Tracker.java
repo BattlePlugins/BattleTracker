@@ -1,6 +1,6 @@
 package mc.alk.tracker;
 
-import mc.alk.plugin.updater.PluginUpdater;
+import mc.alk.battlepluginupdater.PluginUpdater;
 import mc.alk.tracker.controllers.ConfigController;
 import mc.alk.tracker.controllers.MessageController;
 import mc.alk.tracker.controllers.SignController;

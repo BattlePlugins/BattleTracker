@@ -1,7 +1,7 @@
 package mc.alk.tracker.objects;
 
 import mc.alk.tracker.TrackerInterface;
-import mc.alk.util.objects.Hologram;
+import mc.alk.battlebukkitlib.objects.Hologram;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 

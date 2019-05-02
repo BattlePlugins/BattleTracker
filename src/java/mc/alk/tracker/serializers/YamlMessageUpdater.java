@@ -1,7 +1,7 @@
 package mc.alk.tracker.serializers;
 
-import mc.alk.plugin.updater.FileUpdater;
-import mc.alk.plugin.updater.Version;
+import mc.alk.battlepluginupdater.FileUpdater;
+import mc.euro.version.Version;
 import mc.alk.tracker.Tracker;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -50,7 +50,7 @@ public class YamlMessageUpdater {
 	}
 	private Version updateTo1Point01(File oldFile, File backupDir, Version newVersion, Version oldVersion) throws IOException {
 		FileUpdater fu = new FileUpdater(oldFile,backupDir,newVersion,oldVersion);
-		fu.replace(".*version:.*", "version: "+newVersion.getVersion());
+		fu.replace(".*version:.*", "version: "+newVersion.toString());
 		fu.addBefore(".*air:.*",
 				"  bow:",
 				"    - '&6%k&f feathered &6%d&f with arrows!'",

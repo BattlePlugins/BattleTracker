@@ -1,7 +1,7 @@
 package mc.alk.tracker;
 
-import mc.alk.plugin.updater.PluginUpdater.AnnounceUpdateOption;
-import mc.alk.plugin.updater.PluginUpdater.UpdateOption;
+import mc.alk.battlepluginupdater.PluginUpdater.AnnounceUpdateOption;
+import mc.alk.battlepluginupdater.PluginUpdater.UpdateOption;
 
 public class Defaults {
 	public static final int SAVE_EVERY_X_SECONDS = 200;

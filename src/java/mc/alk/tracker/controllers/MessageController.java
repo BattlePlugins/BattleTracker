@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Random;
 
 import mc.alk.tracker.objects.SpecialType;
-import mc.alk.util.InventoryUtil;
+import mc.alk.battlebukkitlib.InventoryUtil;
 import mc.alk.v1r7.controllers.MC;
 
 import org.apache.commons.lang.StringUtils;

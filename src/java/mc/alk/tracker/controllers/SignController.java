@@ -5,7 +5,7 @@ import mc.alk.tracker.TrackerInterface;
 import mc.alk.tracker.objects.Stat;
 import mc.alk.tracker.objects.StatSign;
 import mc.alk.tracker.objects.StatType;
-import mc.alk.util.SignUtil;
+import mc.alk.battlebukkitlib.SignUtil;
 import mc.alk.v1r7.util.SerializerUtil;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
