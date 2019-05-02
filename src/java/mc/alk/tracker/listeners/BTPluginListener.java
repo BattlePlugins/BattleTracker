@@ -3,6 +3,7 @@ package mc.alk.tracker.listeners;
 import mc.alk.tracker.Tracker;
 import mc.alk.tracker.controllers.MessageController;
 
+import mc.alk.tracker.plugins.BTPlaceholderExtension;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -36,6 +37,11 @@ public class BTPluginListener implements Listener {
                 System.out.println("[" + Tracker.getSelf().getVersion() + "] loaded " + pDesc.getName() +
                 		" version " + pDesc.getVersion());            	
             }
-        }		
+        }
+
+        // PlaceholderAPI
+        if (Bukkit.getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new BTPlaceholderExtension().register();
+        }
 	}
 }
