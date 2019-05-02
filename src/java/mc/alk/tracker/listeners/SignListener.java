@@ -10,6 +10,7 @@ import mc.alk.tracker.objects.StatType;
 import mc.alk.tracker.objects.exceptions.InvalidSignException;
 import mc.alk.v1r7.util.AutoClearingTimer;
 
+import mc.euro.bukkitadapter.MaterialAdapter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -38,7 +39,7 @@ public class SignListener implements Listener{
             return;
 		final Block block = event.getClickedBlock();
 		final Material type = block.getType();
-		if (!(type.equals(Material.SIGN) || type.equals(Material.SIGN_POST) || type.equals(Material.WALL_SIGN))) {
+		if (!(type.equals(Material.SIGN) || type.equals(MaterialAdapter.getMaterial("SIGN_POST")) || type.equals(Material.WALL_SIGN))) {
 			return ;}
 		StatSign ss = signController.getStatSign(event.getClickedBlock().getLocation());
 		if (ss == null)
@@ -63,7 +64,7 @@ public class SignListener implements Listener{
 	public void onBlockBreak(BlockBreakEvent event){
 		final Block block = event.getBlock();
 		final Material type = block.getType();
-		if (!(type.equals(Material.SIGN) || type.equals(Material.SIGN_POST) || type.equals(Material.WALL_SIGN))) {
+		if (!(type.equals(Material.SIGN) || type.equals(MaterialAdapter.getMaterial("SIGN_POST")) || type.equals(Material.WALL_SIGN))) {
 			return;}
 		Sign s = (Sign)block.getState();
 		final String l = s.getLine(0);
@@ -76,7 +77,7 @@ public class SignListener implements Listener{
 	public void onSignChange(SignChangeEvent event){
 		final Block block = event.getBlock();
 		final Material type = block.getType();
-		if (!(type.equals(Material.SIGN) || type.equals(Material.SIGN_POST) || type.equals(Material.WALL_SIGN))) {
+		if (!(type.equals(Material.SIGN) || type.equals(MaterialAdapter.getMaterial("SIGN_POST")) || type.equals(Material.WALL_SIGN))) {
 			return;}
 		StatSign ss;
 		try {
