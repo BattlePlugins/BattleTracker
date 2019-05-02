@@ -138,7 +138,10 @@ public class MessageController {
 		if (weapon != null){
 			node = "pvp."+ weapon.getType().name().toLowerCase();
 			wpnName = InventoryUtil.getCustomName(weapon);
-                        wpnLore = weapon.getItemMeta().getLore();
+
+			if (weapon.hasItemMeta() && weapon.getItemMeta().hasLore()) {
+				wpnLore = weapon.getItemMeta().getLore();
+			}
 			messages = config.getStringList(node);
 		}
 		if (messages == null || messages.isEmpty()){
