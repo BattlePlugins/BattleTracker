@@ -1,9 +1,7 @@
 name: ${project.name}
 version: ${project.version}
-
+api-version: 1.13
 main: mc.alk.tracker.Tracker
-
-
 author: alkarin
 softdepend: [BattleCore, Essentials, Herochat, TownyChat, PlaceholderAPI]
 description: A tracker for PvP player related events with leaderboard signs.  Includes database backend.
