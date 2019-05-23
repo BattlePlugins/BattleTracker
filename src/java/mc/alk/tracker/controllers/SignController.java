@@ -7,7 +7,6 @@ import mc.alk.tracker.objects.StatSign;
 import mc.alk.tracker.objects.StatType;
 import mc.alk.battlebukkitlib.SignUtil;
 import mc.alk.v1r7.util.SerializerUtil;
-import mc.euro.bukkitadapter.MaterialAdapter;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -322,14 +321,14 @@ public class SignController {
 	private Sign getSign(World w, int x, int y, int z) {
 		Block b = w.getBlockAt(x, y, z);
 		Material t = b.getType();
-		return t == Material.SIGN || t == MaterialAdapter.getMaterial("SIGN_POST") || t==Material.WALL_SIGN ? (Sign)b.getState(): null;
+		return t.name().contains("SIGN") ? (Sign)b.getState(): null;
 	}
 
 	private Sign getSign(Location l) {
 		if (l == null)
 			return null;
 		Material t = l.getBlock().getType();
-		return t == Material.SIGN || t == MaterialAdapter.getMaterial("SIGN_POST") || t==Material.WALL_SIGN ? (Sign)l.getBlock().getState(): null;
+		return t.name().contains("SIGN") ? (Sign)l.getBlock().getState(): null;
 	}
 
 	private Sign getSign(String loc) {
@@ -337,7 +336,7 @@ public class SignController {
 		if (l == null)
 			return null;
 		Material t = l.getBlock().getType();
-		return t == Material.SIGN || t == MaterialAdapter.getMaterial("SIGN_POST") || t==Material.WALL_SIGN ? (Sign)l.getBlock().getState(): null;
+		return t.name().contains("SIGN") ? (Sign)l.getBlock().getState(): null;
 	}
 
 	public StatSign getStatSign(Location location) {

@@ -9,7 +9,6 @@ import mc.alk.tracker.objects.StatSign;
 import mc.alk.v1r7.serializers.BaseConfig;
 import mc.alk.v1r7.util.SerializerUtil;
 
-import mc.euro.bukkitadapter.MaterialAdapter;
 import org.bukkit.Location;
 import org.bukkit.Material;
 
@@ -63,7 +62,7 @@ public class SignSerializer extends BaseConfig{
 			if (loc == null)
 				return false;
 			Material mat = loc.getWorld().getBlockAt(loc).getType();
-			if ( mat != Material.SIGN && mat != MaterialAdapter.getMaterial("SIGN_POST") && mat != Material.WALL_SIGN)
+			if (!mat.name().contains("SIGN"))
 				return false;
 		} catch( Exception e){
 			return false;

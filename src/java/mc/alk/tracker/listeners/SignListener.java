@@ -10,7 +10,7 @@ import mc.alk.tracker.objects.StatType;
 import mc.alk.tracker.objects.exceptions.InvalidSignException;
 import mc.alk.v1r7.util.AutoClearingTimer;
 
-import mc.euro.bukkitadapter.MaterialAdapter;
+import mc.euro.bukkitadapter.material.BattleMaterial;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -39,8 +39,9 @@ public class SignListener implements Listener{
             return;
 		final Block block = event.getClickedBlock();
 		final Material type = block.getType();
-		if (!(type.equals(Material.SIGN) || type.equals(MaterialAdapter.getMaterial("SIGN_POST")) || type.equals(Material.WALL_SIGN))) {
+		if (!(block instanceof Sign)) {
 			return ;}
+
 		StatSign ss = signController.getStatSign(event.getClickedBlock().getLocation());
 		if (ss == null)
 			return;
@@ -63,8 +64,7 @@ public class SignListener implements Listener{
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event){
 		final Block block = event.getBlock();
-		final Material type = block.getType();
-		if (!(type.equals(Material.SIGN) || type.equals(MaterialAdapter.getMaterial("SIGN_POST")) || type.equals(Material.WALL_SIGN))) {
+		if (!(block instanceof Sign)) {
 			return;}
 		Sign s = (Sign)block.getState();
 		final String l = s.getLine(0);
@@ -76,8 +76,7 @@ public class SignListener implements Listener{
 	@EventHandler
 	public void onSignChange(SignChangeEvent event){
 		final Block block = event.getBlock();
-		final Material type = block.getType();
-		if (!(type.equals(Material.SIGN) || type.equals(MaterialAdapter.getMaterial("SIGN_POST")) || type.equals(Material.WALL_SIGN))) {
+		if (!(block instanceof Sign)) {
 			return;}
 		StatSign ss;
 		try {
@@ -136,9 +135,10 @@ public class SignListener implements Listener{
 		return ss;
 	}
 
-	public static void cancelSignPlace(SignChangeEvent event, Block block){
+	// TODO: Implement way to drop the proper sign for 1.14+
+	public void cancelSignPlace(SignChangeEvent event, Block block){
 		event.setCancelled(true);
 		block.setType(Material.AIR);
-		block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(Material.SIGN, 1));
+		block.getWorld().dropItemNaturally(block.getLocation(), new ItemStack(BattleMaterial.OAK_SIGN.parseMaterial(), 1));
 	}
 }
