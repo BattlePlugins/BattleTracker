@@ -38,9 +38,9 @@ public class SignListener implements Listener{
 		if (event.isCancelled() || event.getClickedBlock() == null)
             return;
 		final Block block = event.getClickedBlock();
-		final Material type = block.getType();
-		if (!(block instanceof Sign)) {
-			return ;}
+		if (!(block.getState() instanceof Sign)) {
+			return ;
+		}
 
 		StatSign ss = signController.getStatSign(event.getClickedBlock().getLocation());
 		if (ss == null)
@@ -64,8 +64,9 @@ public class SignListener implements Listener{
 	@EventHandler
 	public void onBlockBreak(BlockBreakEvent event){
 		final Block block = event.getBlock();
-		if (!(block instanceof Sign)) {
-			return;}
+		if (!(block.getState() instanceof Sign)) {
+			return;
+		}
 		Sign s = (Sign)block.getState();
 		final String l = s.getLine(0);
 		if (l == null || l.isEmpty() || l.charAt(0) != '[')
@@ -76,8 +77,9 @@ public class SignListener implements Listener{
 	@EventHandler
 	public void onSignChange(SignChangeEvent event){
 		final Block block = event.getBlock();
-		if (!(block instanceof Sign)) {
-			return;}
+		if (!(block.getState() instanceof Sign)) {
+			return;
+		}
 		StatSign ss;
 		try {
 			ss = getStatSign(block.getLocation(), event.getLines());
