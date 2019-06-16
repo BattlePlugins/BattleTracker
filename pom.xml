@@ -48,13 +48,13 @@
         <dependency>
             <groupId>mc.euro</groupId>
             <artifactId>BukkitAdapter</artifactId>
-            <version>1.2.3</version>
+            <version>1.2.7</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>mc.alk</groupId>
             <artifactId>BattleCore</artifactId>
-            <version>1.7</version>
+            <version>1.8.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
