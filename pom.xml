@@ -8,8 +8,12 @@
     <name>BattleTracker</name>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
+        <doclint>none</doclint>
         <source>https://github.com/BattlePlugins/BattleTracker</source>
-        <download>http://dev.bukkit.org/bukkit-plugins/battletracker2/</download>
+        <download>https://www.spigotmc.org/resources/2165/</download>
+        <documentation>https://docs.battleplugins.org/docs/bt/</documentation>
+        <maven.test.skip>true</maven.test.skip>
     </properties>
     <!-- Locations for jar repositories -->
     <repositories>
