@@ -45,3 +45,7 @@ Other Links:
 * [Ci Server](http://ci.battleplugins.org/job/BattlePlugins/job/BattleTracker/) (Jenkins Build Server)
 * [Battle Plugin Donations] (Donation link, coming soon)
 * [JavaDocs](http://rainbowcraft.sytes.net/javadocs/battletracker/apidocs/) (WIP)
+
+Stats
+------------
+![Plugin Stats](https://bstats.org/signatures/bukkit/BattleTracker.svg "Plugin Stats")
