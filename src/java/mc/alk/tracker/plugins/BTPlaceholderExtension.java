@@ -55,6 +55,10 @@ public class BTPlaceholderExtension extends PlaceholderExpansion {
                 int i = Integer.parseInt(split[3]);
 
                 Stat top = tracker.getTopX(type, i).get(i-1);
+                if (split.length >= 5 && split[4].equalsIgnoreCase("name")) {
+                    return top.getName();
+                }
+
                 return String.valueOf(top.getStat(type));
             }
         }
