@@ -1,6 +1,8 @@
 ![BattleTracker](https://wiki.battleplugins.org/images/0/0c/BattleTracker.png "BattleTracker")
 ==========
 
+### Please note, this is a legacy repository for the upcoming [BattleTracker rewrite](https://github.com/BattlePlugins/BattleTracker/). As of right now, this repository is still being maintained and is the main version of BattleTracker, but in the future please redirect all issues and reports [here](https://github.com/BattlePlugins/BattleTracker/).
+
 An SQL tracker for Minecraft and [BattleArena](https://github.com/BattlePlugins/BattleArena). Allows overall stats, tallies, and individual records.
 
 Reporting Issues:
@@ -29,15 +31,15 @@ you have a good amount of information about it, creating a new issue might be a 
 Links
 ------------
 Live Chat on Discord:
-* [BattlePlugins Dev](https://discord.gg/tMVPVJf): Join our Discord server to get support, talk about dev stuff, or just say hi!
+* [BattlePlugins Discord](https://discord.gg/tMVPVJf): Join our Discord server to get support, talk about dev stuff, or just say hi!
 
 
 Battle Arena Links:
-* [Bukkit Page](http://dev.bukkit.org/bukkit-plugins/battlearena2/) (BattleArena on Bukkit!)
-* [Spigot Page](http://spigotmc.org/resources/battle-arena.2164/) (BattleArena on Spigot!)
+* [Bukkit Page](http://dev.bukkit.org/bukkit-plugins/battlearena/) (BattleArena on Bukkit!)
+* [Spigot Page](http://spigotmc.org/resources/battlearena.2164/) (BattleArena on Spigot!)
 
 Battle Tracker Links:
-* [Bukkit Page](http://dev.bukkit.org/bukkit-plugins/battletracker2/) (BattleTracker on Bukkit!)
+* [Bukkit Page](http://dev.bukkit.org/bukkit-plugins/battletracker/) (BattleTracker on Bukkit!)
 * [Spigot Page](http://spigotmc.org/resources/battletracker.2165/) (BattleTracker on Spigot!)
 
 Other Links:
