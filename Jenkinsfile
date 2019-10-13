@@ -4,5 +4,5 @@ library identifier: 'BattlePipelineLib@master', retriever: modernSCM(
      credentialsId: 'github-login'])
 
 compileAndDeployMaven {
-    repo = 'BattleTracker'
+    repo = 'BattleTracker-Legacy'
 }
