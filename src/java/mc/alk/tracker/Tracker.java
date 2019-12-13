@@ -1,6 +1,5 @@
 package mc.alk.tracker;
 
-import mc.alk.battlepluginupdater.PluginUpdater;
 import mc.alk.tracker.controllers.ConfigController;
 import mc.alk.tracker.controllers.MessageController;
 import mc.alk.tracker.controllers.SignController;
@@ -54,7 +53,7 @@ public class Tracker extends MCPlugin {
         getCommand("btpvp").setExecutor(new TrackerExecutor(getInterface(Defaults.PVP_INTERFACE)));
         getCommand("btpve").setExecutor(new TrackerExecutor(getInterface(Defaults.PVE_INTERFACE)));
 
-        PluginUpdater.update(this, bukkitId, this.getFile(), Defaults.AUTO_UPDATE, Defaults.ANNOUNCE_UPDATE);
+        // PluginUpdater.update(this, bukkitId, this.getFile(), Defaults.AUTO_UPDATE, Defaults.ANNOUNCE_UPDATE);
         BTPluginListener.loadPlugins();
 
         new Metrics(this);
