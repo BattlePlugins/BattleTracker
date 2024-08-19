@@ -1,0 +1,14 @@
+name: BattleTracker
+main: org.battleplugins.tracker.BattleTracker
+version: ${version}
+description: A standalone plugin that tracks PVP & PVE statistics, provides customizable death messages and many features for all combat needs.
+author: BattlePlugins
+website: https://battleplugins.org
+api-version: 1.19
+softdepend: [BattleArena]
+commands:
+  battletracker:
+    description: The main BattleTracker command.
+    usage: /<command> <subcommand> [args]
+    permission: battletracker.command
+    aliases: [bt]

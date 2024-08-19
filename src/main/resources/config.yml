@@ -1,0 +1,39 @@
+# -----------------
+# Main configuration for BattleTracker
+#
+# Documentation: https://docs.battleplugins.org/shelves/battletracker
+# Support: https://discord.gg/tMVPVJf
+# GitHub: https://github.com/BattlePlugins/BattleTracker
+# -----------------
+config-version: 3.0 # The config version, do not change!
+
+# Options for rating calculators. At the moment, only
+# the elo rating calculator is supported.
+rating:
+  elo:
+    default: 1250
+    spread: 400
+
+# Database options
+database:
+  type: sqlite # sqlite or mysql
+  prefix: bt_
+  db: tracker # Database name
+  url : localhost # Ignored if not mysql
+  port : "3306" # Ignored if not mysql
+  username: root
+  password: ""
+
+# Advanced options
+advanced:
+  # Whether the database should flush a player's data
+  # when they leave the server. Only useful to enable on
+  # large server setups where memory is constrained
+  flush-on-leave: false
+  # Database auto-save interval. Default 5 minutes
+  save-interval: 300
+  # How long a database entry should be kept in memory
+  # before it is considered stale and flushed. This is
+  # not a hard limit and stale objects are only removed
+  # during saves or when requested for another reason.
+  stale-entry-time: 600

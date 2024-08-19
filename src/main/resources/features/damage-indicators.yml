@@ -1,0 +1,17 @@
+# -----------------
+# Main configuration for damage indicators from BattleTracker.
+#
+# Documentation: https://docs.battleplugins.org/shelves/battletracker
+# Support: https://discord.gg/tMVPVJf
+# GitHub: https://github.com/BattlePlugins/BattleTracker
+# -----------------
+config-version: 1.0 # The config version, do not change!
+
+# Whether damage indicators are enabled.
+enabled: true
+
+# Worlds that damage indicators are disabled in.
+disabled-worlds: []
+
+# The format of the damage indicator displays.
+format: "<red>{damage} <dark_red>❤"

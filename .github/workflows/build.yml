@@ -1,0 +1,33 @@
+name: Build
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: gradle
+      - name: Build with Gradle
+        run: ./gradlew shadowJar
+      - name: Publish to Maven Repository
+        if: ${{ success() && github.repository == 'BattlePlugins/BattleTracker' && github.ref_name == 'master' }}
+        run: ./gradlew publish
+        env:
+          BUILD_NUMBER: ${{ github.run_number }}
+          ORG_GRADLE_PROJECT_battlepluginsUsername: ${{ vars.DEPLOY_USER }}
+          ORG_GRADLE_PROJECT_battlepluginsPassword: ${{ secrets.DEPLOY_SECRET }}
+      - name: Publish to Modrinth
+        if: ${{ success() && github.repository == 'BattlePlugins/BattleTracker' && github.ref_name == 'master' }}
+        env:
+          CHANGELOG: ${{ github.event.head_commit.message }}
+          BUILD_NUMBER: ${{ github.run_number }}
+          MODRINTH_TOKEN: ${{ secrets.MODRINTH_TOKEN }}
+        run: ./gradlew modrinth

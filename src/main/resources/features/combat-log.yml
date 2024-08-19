@@ -1,0 +1,66 @@
+# -----------------
+# Main configuration for combat logging from BattleTracker.
+#
+# Documentation: https://docs.battleplugins.org/shelves/battletracker
+# Support: https://discord.gg/tMVPVJf
+# GitHub: https://github.com/BattlePlugins/BattleTracker
+# -----------------
+config-version: 1.0 # The config version, do not change!
+
+# Whether combat logging is enabled.
+enabled: true
+
+# Worlds that combat logging is disabled in.
+disabled-worlds: []
+
+# How long a player will be tagged for combat once hit.
+combat-time: 10
+
+# Whether a player will be marked as in combat when they
+# hit themselves with a projectile or by other means.
+combat-self: false
+
+# Whether a player will be marked as in combat when they
+# hit an entity, or are attacked by an entity.
+combat-entities: true
+
+# Whether a player will be marked as in combat when they
+# hit another player, or are attacked by another player.
+combat-players: true
+
+# The type of message used to display to a player how long
+# they have left in combat.
+# - action_bar: an action bar message will be displayed
+# - bossbar: a boss bar will be displayed
+# - chat: a chat message will be displayed
+# - title: a title message will be displayed
+# - subtitle: a subtitle message will be displayed
+# - none: no message will be displayed
+display-method: action_bar
+
+# Whether users with the "battletracker.combatlog.bypass" permission
+# can bypass the combat logging system.
+allow-permission-bypass: false
+
+# Which entities will not mark a player as in combat when
+# they are hit by them.
+disabled-entities:
+  - egg
+  - ender_pearl
+  - snowball
+
+# Commands that are disabled when a player is in combat.
+disabled-commands:
+  - back
+  - home
+  - spawn
+  - tp
+  - tpa
+  - tpaccept
+  - tpahere
+  - tpall
+  - tpdeny
+  - tppos
+  - warp
+  - warps
+

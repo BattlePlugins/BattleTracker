@@ -1,0 +1,112 @@
+# -----------------
+# Main configuration for the PVP tracker
+#
+# Documentation: https://docs.battleplugins.org/shelves/battletracker
+# Support: https://discord.gg/tMVPVJf
+# GitHub: https://github.com/BattlePlugins/BattleTracker
+# -----------------
+config-version: 2.0 # The config version, do not change!
+
+# The name of the tracker
+name: PvP
+# Recap options
+recap:
+  # Whether the damage recap should be enabled for this tracker
+  enabled: true
+  # The content to display in the recap
+  # - all: Displays all information about a player in the recap, including armor, inventory and damage
+  # - armor: Just shows the armor a player was wearing
+  # - recap: Just shows the damage recap of a player
+  display-content: armor
+  # Whether a damage recap should be shown when a player hovers over
+  # a player's death message.
+  hover-recap: true
+# The data this tracker wil track
+# - pvp: tracks player vs player statistics
+# - pve: tracks player vs enemy statistics
+# - world: tracks world statistics (i.e. damage due to lava, fall damage, etc.)
+tracked-statistics:
+  - pvp
+# Worlds that this tracker is disabled in.
+disabled-worlds: []
+# The rating calculator to use
+# - elo: the default rating calculator
+calculator: elo
+# Killstreaks
+# - A killstreak occurs when a player kills a certain number of players in a row without dying
+killstreaks:
+  enabled: true
+  minimum-kills: 5
+  killstreak-message-interval: 5
+  # The audience of the death messages
+  # - global: all players
+  # - world: only players in the same world
+  # - local: only the player and the target
+  # - arena: only players in the same arena (requires BattleArena)
+  audience: global
+  messages:
+    default: "<white><gold>%player%</gold> is on a killstreak of <red>%kills%</red> kills!</white>"
+    10: "<white><gold>%player%</gold> is on a crazy killstreak of <red>%kills%</red> kills!</white>"
+    20: "<white><gold>%player%</gold> is on an <light_purple>unstoppable</light_purple> killstreak of <red>%kills%</red> kills!</white>"
+# Rampages
+# - A rampage occurs when a player kills a certain number of players in a short amount of time
+rampage:
+  enabled: true
+  rampage-time: 30
+  # The audience of the death messages
+  # - global: all players
+  # - world: only players in the same world
+  # - local: only the player and the target
+  # - arena: only players in the same arena (requires BattleArena)
+  audience: global
+  messages:
+    default: "<white><gold>%player%</gold> is on a rampage!</white>"
+    3: "<white><gold>%player%</gold> is on a crazy rampage!</white>"
+    4: "<white><gold>%player%</gold> is on an <red>insane</red> rampage!</white>"
+    5: "<white><gold>%player%</gold> is on an <light_purple>unstoppable</light_purple> rampage!</white>"
+# Whether death messages processed by this tracker should be enabled
+death-messages:
+  enabled: true
+  # The audience of the death messages
+  # - global: all players
+  # - world: only players in the same world
+  # - local: only the player and the target
+  # - arena: only players in the same arena (requires BattleArena)
+  audience: global
+  # World death messages
+  world:
+    # Disabled - see pve.yml
+    enabled: false
+  entity:
+    # Disabled - see pve.yml
+    enabled: false
+  player:
+    # Enabled - this is for processing deaths from players
+    enabled: true
+    messages:
+      bow:
+        - "<white><gold>%player%</gold> feathered <gold>%target%</gold> with arrows using a <yellow>%item%</yellow>!</white>"
+        - "<white><gold>%player%</gold>'s arrows pierced through <gold>%target%</gold> with their <yellow>%item%</yellow>!</white>"
+      air:
+        - "<white><gold>%player%</gold> pummeled <gold>%target%</gold> with their bare hands!</white>"
+        - "<white><gold>%target%</gold> was no match for the combat skills of <gold>%player%</gold>!</white>"
+        - "<white><gold>%player%</gold> showed <gold>%target%</gold> that fists are weapons too!</white>"
+        - "<white><gold>%player%</gold>'s fists broke down <gold>%target%</gold>!</white>"
+      "#swords":
+        - "<white><gold>%player%</gold> sliced through <gold>%target%</gold> with a <yellow>%item%</yellow>!</white>"
+        - "<white><gold>%player%</gold> cut down <gold>%target%</gold> using their <yellow>%item%</yellow>!</white>"
+        - "<white><gold>%player%</gold> showed <gold>%target%</gold> the sharpness of their <yellow>%item%</yellow>!</white>"
+        - "<white><gold>%player%</gold> hacked <gold>%target%</gold> to death with a <yellow>%item%</yellow>!</white>"
+      "#axes":
+        - "<white><gold>%player%</gold> chopped <gold>%target%</gold> down with a <yellow>%item%</yellow>!</white>"
+        - "<white><gold>%player%</gold> used <gold>%target%</gold> as mere lumber!</white>"
+        - "<white><gold>%player%</gold> cleaved <gold>%target%</gold> with a <yellow>%item%</yellow>!</white>"
+        - "<white><gold>%player%</gold> split <gold>%target%</gold> in half with a <yellow>%item%</yellow>!</white>"
+      default:
+        - "<white><gold>%player%</gold> killed <gold>%target%</gold>!</white>"
+        - "<white><gold>%player%</gold> took down <gold>%target%</gold>!</white>"
+        - "<white><gold>%player%</gold> defeated <gold>%target%</gold>!</white>"
+        - "<white><gold>%player%</gold> eliminated <gold>%target%</gold>!</white>"
+        - "<white><gold>%target%</gold> was slain by <gold>%player%</gold>!</white>"
+        - "<white><gold>%target%</gold> was killed by <gold>%player%</gold>!</white>"
+        - "<white><gold>%target%</gold> was no match for <gold>%player%</gold>!</white>"

@@ -1,0 +1,383 @@
+# -----------------
+# Main configuration for the PVP tracker
+#
+# Documentation: https://docs.battleplugins.org/shelves/battletracker
+# Support: https://discord.gg/tMVPVJf
+# GitHub: https://github.com/BattlePlugins/BattleTracker
+# -----------------
+config-version: 2.0 # The config version, do not change!
+
+# The name of the tracker
+name: PvE
+# Whether the damage recap should be enabled for this tracker
+recap:
+  # Whether the damage recap should be enabled for this tracker
+  enabled: true
+  # The content to display in the recap
+  # - all: Displays all information about a player in the recap, including armor, inventory and damage
+  # - armor: Just shows the armor a player was wearing
+  # - recap: Just shows the damage recap of a player
+  display-content: armor
+  # Whether a damage recap should be shown when a player hovers over
+  # a player's death message.
+  hover-recap: true
+# The data this tracker wil track
+# - pvp: tracks player vs player statistics
+# - pve: tracks player vs enemy statistics
+# - world: tracks world statistics (i.e. damage due to lava, fall damage, etc.)
+tracked-statistics:
+  - pve
+  - world
+# Worlds that this tracker is disabled in.
+disabled-worlds: []
+# The rating calculator to use
+# - elo: the default rating calculator
+calculator: elo
+# Killstreaks
+# - A killstreak occurs when a player kills a certain number of players in a row without dying
+killstreaks:
+  enabled: false
+# Rampages
+# - A rampage occurs when a player kills a certain number of players in a short amount of time
+rampage:
+  enabled: false
+# Whether death messages processed by this tracker should be enabled
+death-messages:
+  enabled: true
+  # The audience of the death messages
+  # - global: all players
+  # - world: only players in the same world
+  # - local: only the player and the target
+  # - arena: only players in the same arena (requires BattleArena)
+  audience: global
+  # World death messages
+  world:
+    # Enabled - this is for processing deaths from the world
+    enabled: true
+    messages:
+      fire:
+        - "<white><gold>%player%</gold> was fried to a crisp.</white>"
+        - "<white><gold>%player%</gold> burned to death.</white>"
+        - "<white><gold>%player%</gold> was consumed by flames.</white>"
+      fire_tick:
+        - "<white><gold>%player%</gold> tried to extinguish the flames, but failed.</white>"
+      lava:
+        - "<white><gold>%player%</gold> was no match for a pool of lava.</white>"
+        - "<white><gold>%player%</gold> became one with the lava.</white>"
+      fall:
+        - "<white><gold>%player%</gold> found out what the ground feels like.</white>"
+        - "<white><gold>%player%</gold> has fallen and can't get up.</white>"
+        - "<white><gold>%player%</gold> fell to their doom.</white>"
+        - "<white><gold>%player%</gold> fell from a high place.</white>"
+        - "<white><gold>%player%</gold> fell too far.</white>"
+      contact:
+        - "<white><gold>%player%</gold> should learn to not jump on a cactus.</white>"
+      block_explosion:
+        - "<white><gold>%player%</gold> has been shredded by explosives.</white>"
+        - "<white><gold>%player%</gold> was blown to bits by a block explosion.</white>"
+      suffocation:
+        - "<white><gold>%player%</gold> ran out of breath.</white>"
+        - "<white><gold>%player%</gold> should learn not to suffocate.</white>"
+      starvation:
+        - "<white><gold>%player%</gold> should learn to eat.</white>"
+        - "<white><gold>%player%</gold> starved to death.</white>"
+        - "<white><gold>%player%</gold> realized that the buffet was just a mirage.</white>"
+        - "<white><gold>%player%</gold> learned that skipping meals isn't the best survival strategy.</white>"
+        - "<white><gold>%player%</gold> found out the hard way that hunger pangs don't make good friends.</white>"
+      lightning:
+        - "<white><gold>%player%</gold> was struck down by a bolt of lightning.</white>"
+        - "<white>The heavens unleashed their wrath on <gold>%player%</gold>.</white>"
+        - "<white><gold>%player%</gold> picked a fight with Zeus.</white>"
+      suicide:
+        - "<white>hari kari suited <gold>%player%</gold>.</white>"
+        - "<white><gold>%player%</gold> chose the ignoble way out.</white>"
+        - "<white><gold>%player%</gold> committed toaster bath.</white>"
+        - "<white><gold>%player%</gold> committed funeral.</white>"
+        - "<white><gold>%player%</gold> committed lego step.</white>"
+      kill:
+        - "<white>hari kari suited <gold>%player%</gold>.</white>"
+        - "<white><gold>%player%</gold> chose the ignoble way out.</white>"
+        - "<white><gold>%player%</gold> committed toaster bath.</white>"
+        - "<white><gold>%player%</gold> committed funeral.</white>"
+        - "<white><gold>%player%</gold> committed lego step.</white>"
+      drowning:
+        - "<white><gold>%player%</gold> needs to learn to swim.</white>"
+        - "<white>Dog paddling wasn't enough for <gold>%player%</gold>.</white>"
+        - "<white><blue>Water</blue> was the end of poor <gold>%player%</gold>.</white>"
+        - "<white><gold>%player%</gold> was in over their head.</white>"
+        - "<white><gold>%player%</gold> thought they were a fish.</white>"
+      magic:
+        - "<white><gold>%player%</gold> found out that they weren't actually a wizard</white>"
+        - "<white>The spellbook of <gold>%player%</gold> was a bit too magical for them to handle!</white>"
+        - "<white><gold>%player%</gold> tried casting a spell, but all they conjured was their own demise.</white>"
+        - "<white><gold>%player%</gold> learned that magic tricks aren't supposed to be life-threatening.</white>"
+      void:
+        - "<white>The <black>void</black> has claimed <gold>%player%</gold></white>"
+        - "<white><gold>%player%</gold> fell into the eternal abyss of the void.</white>"
+        - "<white>The void has swallowed <gold>%player%</gold> whole.</white>"
+      world_border:
+        - "<white><gold>%player%</gold> was pushed to the limit by the world border.</white>"
+        - "<white>The world border claimed <gold>%player%</gold> as its own.</white>"
+      entity_attack:
+        - "<white>In a fierce clash, <gold>%player%</gold> was overwhelmed by an entity.</white>"
+        - "<white><gold>%player%</gold> fell to a relentless entity's assault.</white>"
+      entity_sweep_attack:
+        - "<white><gold>%player%</gold> was swept away in the powerful sweep of an entity.</white>"
+        - "<white>The sweep of an entity's attack proved fatal for <gold>%player%</gold>.</white>"
+      projectile:
+        - "<white><gold>%player%</gold> was struck down by a precision projectile.</white>"
+        - "<white>A well-aimed projectile ended the journey of <gold>%player%</gold>.</white>"
+      melting:
+        - "<white>Under relentless heat, <gold>%player%</gold> melted away.</white>"
+        - "<white><gold>%player%</gold> became a puddle of defeat due to melting.</white>"
+      entity_explosion:
+        - "<white><gold>%player%</gold> was blown to bits by an explosive entity.</white>"
+        - "<white><gold>%player%</gold> faced the fiery wrath of an entity's explosion.</white>"
+      poison:
+        - "<white><gold>%player%</gold> succumbed to a deadly dose of poison.</white>"
+        - "<white>Poison took <gold>%player%</gold> slowly but surely.</white>"
+      wither:
+        - "<white><gold>%player%</gold> was withered away by dark, cursed magic.</white>"
+        - "<white>The relentless withering effect claimed <gold>%player%</gold>.</white>"
+      falling_block:
+        - "<white><gold>%player%</gold> was crushed under a falling block's weight.</white>"
+        - "<white>A heavy block fell upon <gold>%player%</gold>, sealing their fate.</white>"
+      thorns:
+        - "<white><gold>%player%</gold> felt the vengeful sting of thorns.</white>"
+        - "<white><gold>%player%</gold> was punished by the sharp retaliation of thorns.</white>"
+      dragon_breath:
+        - "<white>The fiery breath of a dragon reduced <gold>%player%</gold> to ashes.</white>"
+        - "<white><gold>%player%</gold> was engulfed in the searing dragon's breath.</white>"
+      custom:
+        - "<white><gold>%player%</gold> met an enigmatic end of their own making.</white>"
+        - "<white>The fate of <gold>%player%</gold> remains a mystery.</white>"
+      fly_into_wall:
+        - "<white><gold>%player%</gold> hit the wall at full speed and couldn't recover.</white>"
+        - "<white>The wall proved too much for <gold>%player%</gold> to handle.</white>"
+      hot_floor:
+        - "<white><gold>%player%</gold> couldn't stand the searing heat of the magma floor.</white>"
+        - "<white>A magma block turned <gold>%player%</gold> into a scorching memory.</white>"
+      cramming:
+        - "<white><gold>%player%</gold> was crushed under the weight of too many entities.</white>"
+        - "<white>Entity cramming led to the demise of <gold>%player%</gold>.</white>"
+      dryout:
+        - "<white><gold>%player%</gold> withered away from dehydration.</white>"
+        - "<white>Without water, <gold>%player%</gold> faced a grim end.</white>"
+      freeze:
+        - "<white><gold>%player%</gold> was frozen solid by the cold.</white>"
+        - "<white>The cold claimed <gold>%player%</gold> as its own.</white>"
+      sonic_boom:
+        - "<white><gold>%player%</gold> was blasted by a powerful sonic boom.</white>"
+        - "<white>The warden's sonic boom proved fatal for <gold>%player%</gold>.</white>"
+      default:
+        - "<white><gold>%player%</gold> died!</white>"
+        - "<white><gold>%player%</gold> passed away.</white>"
+        - "<white><gold>%player%</gold> should learn not to die!</white>"
+        - "<white><gold>%player%</gold> faced a mysterious end that even the bravest couldn't foresee!</white>"
+        - "<white>In the battle against the unknown, <gold>%player%</gold> met their match!</white>"
+        - "<white><gold>%player%</gold> was lost in the chaos of an undisclosed demise.</white>"
+        - "<white>The reasons behind <gold>%player%</gold>'s end remain shrouded in enigma.</white>"
+        - "<white><gold>%player%</gold> fell victim to a fate that defies explanation!</white>"
+  entity:
+    # Enabled - this is for processing deaths from entities
+    enabled: true
+    messages:
+      lightning_bolt:
+        - "<white><gold>%player%</gold> was struck down by a bolt of lightning.</white>"
+        - "<white>The heavens unleashed their wrath on <gold>%player%</gold>.</white>"
+        - "<white><gold>%player%</gold> picked a fight with the gods.</white>"
+      camel:
+        - "<white><gold>%player%</gold> discovered that camels don't take kindly to rude travelers.</white>"
+        - "<white><gold>%player%</gold> learned that camels can pack more than just a punch.</white>"
+        - "<white><gold>%player%</gold> faced a camel's kick and ended up in the desert of despair.</white>"
+        - "<white><gold>%player%</gold> found out the hard way that camels have a 'bumpy' sense of humor.</white>"
+        - "<white><gold>%player%</gold> got caught in the crossfire of a camel's cranky mood.</white>"
+      creeper:
+        - "<white>The <dark_green>creeper</dark_green> blast vaporized <gold>%player%</gold>!</white>"
+        - "<white><gold>%player%</gold> was caught in a creeper's surprise party, and it was a blast!</white>"
+        - "<white><gold>%player%</gold> went out with a bang, courtesy of a <dark_green>creeper</dark_green>'s explosive greeting.</white>"
+        - "<white>The creeper's idea of a hug was a bit too intense for <gold>%player%</gold>.</white>"
+        - "<white><gold>%player%</gold> discovered that creepers throw the best (and worst) parties.</white>"
+      zombie:
+        - "<white><gold>%player%</gold> has left this world as a <dark_green>zombie</dark_green>.</white>"
+        - "<white><dark_green>Zombies</dark_green> have devoured <gold>%player%</gold>!</white>"
+        - "<white>The <dark_green>zombie</dark_green> horde have claimed <gold>%player%</gold>!</white>"
+      skeleton:
+        - "<white><gold>%player%</gold> was pierced by a <gray>skeleton</gray> arrow.</white>"
+        - "<white><gold>%player%</gold> was no match for the <gray>skeleton</gray>.</white>"
+      spider:
+        - "<white>Spiders have drained <gold>%player%</gold>!</white>"
+        - "<white><gold>%player%</gold> was ensnared by a <red>spider</red>.</white>"
+      cave_spider:
+        - "<white>Cave spiders have swarmed <gold>%player%</gold>!</white>"
+      ender_dragon:
+        - "<white>The <dark_purple>ender dragon</dark_purple> has annihilated <gold>%player%</gold>!</white>"
+        - "<white><gold>%player%</gold> was incinerated by the <dark_purple>ender dragon's</dark_purple> fiery breath!</white>"
+        - "<white>The ender dragon's tail crushed <gold>%player%</gold>!</white>"
+        - "<white><gold>%player%</gold> was swept away by the ender dragon's wings!</white>"
+        - "<white>The <dark_purple>ender dragon's</dark_purple> roar shattered <gold>%player%</gold>!</white>"
+      blaze:
+        - "<white>The <dark_red>blaze</dark_red> has crisped <gold>%player%</gold>!</white>"
+      silverfish:
+        - "<white><gold>%player%</gold> was overwhelmed by silverfish.</white>"
+      enderman:
+        - "<white><dark_gray>Endermen</dark_gray> have taken <gold>%player%</gold> to the nether!</white>"
+        - "<white><gold>%player%</gold> looked into the eyes of the <dark_gray>Enderman</dark_gray>.</white>"
+      snow_golem:
+        - "<white><gold>%player%</gold> was pelted by snowballs from a snow golem.</white>"
+        - "<white><gold>%player%</gold> got the cold shoulder from a snowman and didn't survive.</white>"
+        - "<white>The snow golem's chilly reception turned <gold>%player%</gold> into a frosty pancake.</white>"
+      iron_golem:
+        - "<white><gold>%player%</gold> was smacked down by the iron golem's heavy hands.</white>"
+        - "<white><gold>%player%</gold> found out that <gray>iron golems</gray> have a solid way of dealing with intruders.</white>"
+        - "<white><gold>%player%</gold> got crushed under the iron golem's mighty iron fists.</white>"
+        - "<white>The iron golem's strength turned <gold>%player%</gold> into a metal-cased memory.</white>"
+        - "<white><gold>%player%</gold> was tossed aside by the <gray>iron golem</gray>'s unyielding embrace.</white>"
+      cat:
+        - "<white>The cute kitty showed its power to <gold>%player%</gold>!</white>"
+        - "<white><gold>%player%</gold> discovered that precious little cats have fangs too.</white>"
+      ocelot:
+        - "<white>The cute ocelot showed its power to <gold>%player%</gold>!</white>"
+        - "<white><gold>%player%</gold> discovered that ocelots have fangs.</white>"
+      wolf:
+        - "<white><gold>%player%</gold> was hunted down by the pack!</white>"
+        - "<white><gold>%player%</gold> was devoured by wolves!</white>"
+      giant:
+        - "<white><gold>%player%</gold> was smashed by a Giant!</white>"
+        - "<white>A giant has flattened <gold>%player%</gold>!</white>"
+      slime:
+        - "<white><gold>%player%</gold> was liquified by a <green>slime</green>!</white>"
+        - "<white><gold>%player%</gold> was enveloped by <green>slime</green>!</white>"
+      ghast:
+        - "<white><gold>%player%</gold> was burned by ghasts!</white>"
+        - "<white><gold>%player%</gold> learned the hard way that ghasts have a killer smile.</white>"
+        - "<white><gold>%player%</gold> got a taste of ghast's gourmet fireball cuisine.</white>"
+      zombified_piglin:
+        - "<white>The <red>zombified piglin</red> horde has claimed <gold>%player%</gold>!</white>"
+        - "<white><gold>%player%</gold> got caught in a zombified piglin's not-so-friendly hug.</white>"
+        - "<white>The zombified piglin had a bone to pick with <gold>%player%</gold>, and it wasn't pretty.</white>"
+      magma_cube:
+        - "<white><gold>%player%</gold> has been lavaslimed!</white>"
+        - "<white><gold>%player%</gold> was engulfed by a <red>magma cube</red>!</white>"
+        - "<white><gold>%player%</gold> was squashed by a magma cube!</white>"
+        - "<white>A magma cube's fiery embrace engulfed <gold>%player%</gold>!</white>"
+      drowned:
+        - "<white><gold>%player%</gold> has been suffocated by a <blue>drowned</blue>!</white>"
+        - "<white>A wet zombie has drenched <gold>%player%</gold>!</white>"
+      guardian:
+        - "<white>A guardian has claimed <gold>%player%</gold>!</white>"
+        - "<white><gold>%player%</gold> got a taste of a <aqua>guardian</aqua>'s pointy personality.</white>"
+        - "<white><gold>%player%</gold> found out that guardians have a shocking way of saying hello.</white>"
+      evoker:
+        - "<white><gold>%player%</gold> has found themselves <red>evoked</red>!</white>"
+        - "<white><gold>%player%</gold> was on the receiving end of an evoker's spell-tacular performance!</white>"
+        - "<white><gold>%player%</gold> got a firsthand taste of the evoker's voodoo magic.</white>"
+      evoker_fangs:
+        - "<white><gold>%player%</gold> has been evocated by the fierce fangs of an evoker!</white>"
+        - "<white><gold>%player%</gold>'s life was claimed by an evoker fang!</white>"
+      husk:
+        - "<white>Husks have claimed <gold>%player%</gold>!</white>"
+        - "<white><gold>%player%</gold> has been mummified by <yellow>husks</yellow>!</white>"
+      llama_spit:
+        - "<white><gold>%player%</gold> had a bad day with a llama.</white>"
+        - "<white><yellow>Llamas</yellow> did not want to be friendly to <gold>%player%</gold>.</white>"
+      pillager:
+        - "<white><gold>%player%</gold> was not careful when saving the villagers!</white>"
+        - "<white><gold>%player%</gold> lost against a puny pillager.</white>"
+      polar_bear:
+        - "<white><gold>%player%</gold> learned that polar bears are not only cute, but dangerous.</white>"
+        - "<white><gold>%player%</gold> tried to pet a polar bear.</white>"
+      ravager:
+        - "<white>Ravagers have destroyed <gold>%player%</gold>!</white>"
+      shulker:
+        - "<white>Shulkers have split <gold>%player%</gold> in two!</white>"
+        - "<white><gold>%player%</gold> was not careful when dealing with <light_purple>shulkers</light_purple>.</white>"
+      stray:
+        - "<white><gray>Shadow skeletons</gray> have phased into <gold>%player%</gold>.</white>"
+        - "<white><gold>%player%</gold> was not careful when dealing with <gray>strays</gray>.</white>"
+      vex:
+        - "<white><gold>%player%</gold> tried to fly with the vexes!</white>"
+        - "<white><gray>Vexes</gray> showed <gold>%player%</gold> who was boss!</white>"
+        - "<white><gold>%player%</gold> tried to make friends with vexes.</white>"
+      zombie_villager:
+        - "<white><gold>%player%</gold> couldn't tell the difference between a villager and a zombie.</white>"
+        - "<white><gold>%player%</gold> was not careful when dealing with <green>zombie villagers</green>.</white>"
+      phantom:
+        - "<white><gold>%player%</gold> was swooped down on by a phantom!</white>"
+        - "<white>A phantom has carried away <gold>%player%</gold>!</white>"
+      panda:
+        - "<white><gold>%player%</gold> learned that pandas can be fierce!</white>"
+        - "<white>A panda showed <gold>%player%</gold> its strength!</white>"
+      witch:
+        - "<white><gold>%player%</gold> was cursed by a witch's potion!</white>"
+        - "<white>A witch's brew spelled doom for <gold>%player%</gold>!</white>"
+      vindicator:
+        - "<white><gold>%player%</gold> was axed by a vindicator!</white>"
+        - "<white>A vindicator's axe ended <gold>%player%</gold>!</white>"
+      wither:
+        - "<white>The <dark_red>wither</dark_red> has obliterated <gold>%player%</gold>!</white>"
+        - "<white><gold>%player%</gold> stood no chance against the wither!</white>"
+        - "<white>The wither's devastating attack disintegrated <gold>%player%</gold>!</white>"
+        - "<white><gold>%player%</gold> was engulfed in the <dark_red>wither's</dark_red> deadly aura!</white>"
+      wither_skeleton:
+        - "<white>A wither skeleton has slain <gold>%player%</gold>!</white>"
+        - "<white><gold>%player%</gold> was struck down by a wither skeleton!</white>"
+      hoglin:
+        - "<white><gold>%player%</gold> was gored by a hoglin!</white>"
+        - "<white>A hoglin's charge trampled <gold>%player%</gold>!</white>"
+      zoglin:
+        - "<white><gold>%player%</gold> was mauled by a zoglin!</white>"
+        - "<white>A zoglin's fury tore apart <gold>%player%</gold>!</white>"
+      strider:
+        - "<white><gold>%player%</gold> couldn't handle the heat and fell off a strider!</white>"
+        - "<white>A strider's lava ride was too hot for <gold>%player%</gold>!</white>"
+      bee:
+        - "<white><gold>%player%</gold> was stung to death by bees!</white>"
+        - "<white>A swarm of bees overwhelmed <gold>%player%</gold>!</white>"
+      piglin:
+        - "<white><gold>%player%</gold> was ambushed by piglins!</white>"
+        - "<white>A horde of piglins claimed <gold>%player%</gold>!</white>"
+      piglin_brute:
+        - "<white><gold>%player%</gold> was brutalized by a piglin brute!</white>"
+        - "<white>A piglin brute's ferocity ended <gold>%player%</gold>!</white>"
+      axolotl:
+        - "<white><gold>%player%</gold> was nibbled to death by axolotls!</white>"
+        - "<white>Axolotls showed no mercy to <gold>%player%</gold>!</white>"
+      warden:
+        - "<white>The <dark_aqua>warden</dark_aqua> sensed <gold>%player%</gold> and annihilated them!</white>"
+        - "<white><gold>%player%</gold> was crushed by the <dark_aqua>warden</dark_aqua>!</white>"
+        - "<white>The warden's roar ended <gold>%player%</gold> in an instant!</white>"
+        - "<white><gold>%player%</gold> fell victim to the warden's unstoppable power!</white>"
+      frog:
+        - "<white><gold>%player%</gold> underestimated a <green>frog</green>'s leap!</white>"
+        - "<white>A frog's tongue claimed <gold>%player%</gold>!</white>"
+      tadpole:
+        - "<white><gold>%player%</gold> was overwhelmed by <green>tadpoles</green>!</white>"
+        - "<white>A tadpole took down <gold>%player%</gold>!</white>"
+      goat:
+        - "<white><gold>%player%</gold> was rammed off a cliff by a goat!</white>"
+        - "<white>A goat's headbutt sent <gold>%player%</gold> flying!</white>"
+      dolphin:
+        - "<white><gold>%player%</gold> was drowned by <aqua>dolphins</aqua>!</white>"
+        - "<white>Dolphins played too rough with <gold>%player%</gold>!</white>"
+      sniffer:
+        - "<white><gold>%player%</gold> was caught off guard by the large nose of a <yellow>sniffer</yellow>!</white>"
+        - "<white>The ancient <yellow>sniffer</yellow> dug up the end for <gold>%player%</gold>!</white>"
+      breeze:
+        - "<white><gold>%player%</gold> was swept away by an unexpected gust of <aqua>breeze</aqua>!</white>"
+        - "<white>A fierce breeze carried <gold>%player%</gold> to their final resting place!</white>"
+      wind_charge:
+        - "<white><gold>%player%</gold> was struck down by a whirlwind from a <aqua>wind charge</aqua>!</white>"
+        - "<white>The force of a wind charge blew <gold>%player%</gold> away for good!</white>"
+      primed_tnt:
+        - "<white><gold>%player%</gold> was blown to bits by <red>TNT</red>!</white>"
+        - "<white><gold>%player%</gold> mistakenly thought they were a demolitions expert.</white>"
+        - "<white><gold>%player%</gold> was caught in the blast of explosives!</white>"
+      default:
+        - "<white><gold>%player%</gold> has been slain.</white>"
+        - "<white><gold>%player%</gold> did not survive this time!</white>"
+        - "<white><gold>%player%</gold> was on the losing side of a monster mash.</white>"
+        - "<white>The ultimate showdown: <gold>%player%</gold> vs. an angry mob. Spoiler: The mob won.</white>"
+  player:
+    # Disabled - see pvp.yml
+    enabled: false
