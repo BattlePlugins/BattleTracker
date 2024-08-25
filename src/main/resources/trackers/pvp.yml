@@ -52,7 +52,7 @@ killstreaks:
 # - A rampage occurs when a player kills a certain number of players in a short amount of time
 rampage:
   enabled: true
-  rampage-time: 30
+  rampage-time: 10
   # The audience of the death messages
   # - global: all players
   # - world: only players in the same world

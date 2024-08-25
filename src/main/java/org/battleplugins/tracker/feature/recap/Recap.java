@@ -207,7 +207,15 @@ public record Recap(
 
             senderPlayer.openInventory(inventory);
         } else if (displayContent == Recap.DisplayContent.RECAP) {
-            // TODO: Send paginated chat message
+            if (tracker.tracksData(TrackedDataType.PVP)) {
+                RecapRoundup.recapPlayer(audience, battleRecap);
+            } else if (tracker.tracksData(TrackedDataType.PVE)) {
+                RecapRoundup.recapEntity(audience, battleRecap);
+            } else {
+                RecapRoundup.recapSource(audience, battleRecap);
+            }
+
+            RecapRoundup.sendFooter(audience, tracker, battleRecap);
         }
     }
 

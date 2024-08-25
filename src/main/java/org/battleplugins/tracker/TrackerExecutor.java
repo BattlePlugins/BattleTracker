@@ -14,9 +14,10 @@ import org.battleplugins.tracker.util.Util;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -31,7 +32,7 @@ import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.BiConsumer;
 
-public class TrackerExecutor implements CommandExecutor {
+public class TrackerExecutor implements TabExecutor {
     private final Tracker tracker;
     private final Map<String, SimpleExecutor> commands;
 
@@ -381,6 +382,16 @@ public class TrackerExecutor implements CommandExecutor {
                         }
                     });
         });
+    }
+
+    @Override
+    public @Nullable List<String> onTabComplete(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
+        List<String> completions = new ArrayList<>();
+        if (args.length == 1) {
+            StringUtil.copyPartialMatches(args[0], this.commands.keySet(), completions);
+        }
+
+        return completions;
     }
 
     record SimpleExecutor(String description, Arguments args, BiConsumer<CommandSender, String> consumer) implements Executor {
