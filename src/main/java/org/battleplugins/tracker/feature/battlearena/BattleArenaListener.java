@@ -1,10 +1,13 @@
 package org.battleplugins.tracker.feature.battlearena;
 
+import com.google.common.base.Supplier;
 import org.battleplugins.arena.Arena;
 import org.battleplugins.arena.ArenaPlayer;
 import org.battleplugins.arena.competition.JoinResult;
 import org.battleplugins.arena.competition.LiveCompetition;
 import org.battleplugins.arena.competition.phase.CompetitionPhaseType;
+import org.battleplugins.arena.event.BattleArenaReloadEvent;
+import org.battleplugins.arena.event.BattleArenaReloadedEvent;
 import org.battleplugins.arena.event.arena.ArenaCreateExecutorEvent;
 import org.battleplugins.arena.event.arena.ArenaDrawEvent;
 import org.battleplugins.arena.event.arena.ArenaInitializeEvent;
@@ -14,10 +17,13 @@ import org.battleplugins.arena.event.player.ArenaLeaveEvent;
 import org.battleplugins.arena.event.player.ArenaPreJoinEvent;
 import org.battleplugins.arena.options.types.BooleanArenaOption;
 import org.battleplugins.tracker.BattleTracker;
+import org.battleplugins.tracker.SqlTracker;
 import org.battleplugins.tracker.TrackedDataType;
 import org.battleplugins.tracker.Tracker;
 import org.battleplugins.tracker.stat.Record;
 import org.battleplugins.tracker.stat.StatType;
+import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,8 +40,52 @@ public class BattleArenaListener implements Listener {
     private final BattleTracker battleTracker;
     private final Map<Arena, Consumer<Tracker>> pendingExecutors = new HashMap<>();
 
+    private boolean reloaded;
+
     public BattleArenaListener(BattleTracker battleTracker) {
         this.battleTracker = battleTracker;
+    }
+
+    @EventHandler
+    public void onBattleArenaReload(BattleArenaReloadEvent event) {
+        this.reloaded = true;
+
+        for (Arena arena : event.getBattleArena().getArenas()) {
+            Tracker tracker = this.battleTracker.getTracker(arena.getName().toLowerCase(Locale.ROOT));
+            if (tracker == null) {
+                continue;
+            }
+
+            tracker.saveAll().whenComplete((aVoid, e) -> {
+                if (e != null) {
+                    this.battleTracker.error("Failed to save tracker data for Arena: {}.", arena.getName());
+                    e.printStackTrace();
+                }
+
+                tracker.destroy();
+            });
+
+            this.battleTracker.unregisterTracker(tracker);
+        }
+    }
+
+    @EventHandler
+    public void onBattleArenaReloaded(BattleArenaReloadedEvent event) {
+        for (Arena arena : event.getBattleArena().getArenas()) {
+            Tracker tracker = this.battleTracker.getTracker(arena.getName().toLowerCase(Locale.ROOT));
+            if (tracker == null) {
+                continue;
+            }
+
+            // Ensure records are created for online players
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                tracker.getOrCreateRecord((OfflinePlayer) player).whenComplete((record, e) -> {
+                    if (tracker instanceof SqlTracker sqlTracker) {
+                        sqlTracker.getRecords().lock(player.getUniqueId());
+                    }
+                });
+            }
+        }
     }
 
     @EventHandler
@@ -48,24 +98,32 @@ public class BattleArenaListener implements Listener {
         }
 
         Consumer<Tracker> pendingExecutor = this.pendingExecutors.remove(arena);
+        Supplier<Tracker> supplier = () -> {
+            Tracker tracker = new ArenaTracker(
+                    this.battleTracker,
+                    arena.getName(),
+                    this.battleTracker.getCalculator("elo"),
+                    Set.of(TrackedDataType.PVP),
+                    List.of()
+            );
+
+            if (pendingExecutor != null) {
+                pendingExecutor.accept(tracker);
+            }
+
+            return tracker;
+        };
+
         this.battleTracker.registerTracker(
                 event.getArena().getName().toLowerCase(Locale.ROOT),
-                () -> {
-                    Tracker tracker = new ArenaTracker(
-                            this.battleTracker,
-                            arena.getName(),
-                            this.battleTracker.getCalculator("elo"),
-                            Set.of(TrackedDataType.PVP),
-                            List.of()
-                    );
-
-                    if (pendingExecutor != null) {
-                        pendingExecutor.accept(tracker);
-                    }
-
-                    return tracker;
-                }
+                supplier
         );
+
+        // This is kind of silly, but in the event that the plugin is reloaded,
+        // we want to ensure our tracker instance gets updated.
+        if (this.reloaded) {
+            this.battleTracker.registerTracker(supplier.get());
+        }
 
         this.battleTracker.info("Enabled tracking for arena: {}.", arena.getName());
     }

@@ -393,13 +393,13 @@ public abstract class SqlSerializer {
 
     protected void executeUpdate(boolean async, String strRawStmt, Object... varArgs) {
         if (async) {
-            new Thread(() -> {
+            CompletableFuture.runAsync(() -> {
                 try {
                     this.executeUpdate(strRawStmt, varArgs);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-            }).start();
+            });
         } else {
             try {
                 this.executeUpdate(strRawStmt, varArgs);
@@ -433,17 +433,11 @@ public abstract class SqlSerializer {
     }
 
     protected CompletableFuture<Void> executeBatch(boolean async, String updateStatement, List<List<Object>> batch) {
-        CompletableFuture<Void> future = new CompletableFuture<>();
+        CompletableFuture<Void> future;
         if (async) {
-            new Thread(() -> {
-                try {
-                    this.executeBatch(updateStatement, batch);
-                    future.complete(null);
-                } catch (Exception e) {
-                    future.completeExceptionally(e);
-                }
-            }).start();
+            future = CompletableFuture.runAsync(() -> this.executeBatch(updateStatement, batch));
         } else {
+            future = new CompletableFuture<>();
             try {
                 this.executeBatch(updateStatement, batch);
                 future.complete(null);

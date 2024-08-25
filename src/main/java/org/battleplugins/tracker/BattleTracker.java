@@ -260,8 +260,22 @@ public class BattleTracker extends JavaPlugin {
         this.ratingCalculators.put(calculator.getName(), calculator);
     }
 
-    void registerTracker(Tracker tracker) {
+    /**
+     * Registers a {@link Tracker}.
+     *
+     * @param tracker the tracker to register
+     */
+    public void registerTracker(Tracker tracker) {
         this.trackers.put(tracker.getName(), tracker);
+    }
+
+    /**
+     * Unregisters a {@link Tracker}.
+     *
+     * @param tracker the tracker to unregister
+     */
+    public void unregisterTracker(Tracker tracker) {
+        this.trackers.remove(tracker.getName());
     }
 
     /**

@@ -26,6 +26,7 @@ public class ArenaTracker extends SqlTracker {
                 StatType.MAX_STREAK, StatType.MAX_RANKING, StatType.RATING,
                 StatType.MAX_RATING, StatType.MAX_KD_RATIO
         );
+
         return new TrackerSqlSerializer(
                 this,
                 generalStats,
