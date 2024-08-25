@@ -43,7 +43,7 @@ public class BattleArenaListener implements Listener {
         Arena arena = event.getArena();
 
         // Statistic tracking is disabled
-        if (!arena.option(BattleArenaHandler.TRACK_STATISTICS).map(BooleanArenaOption::isEnabled).orElse(true)) {
+        if (!arena.option(BattleArenaHandler.TRACK_STATISTICS_OPTION).map(BooleanArenaOption::isEnabled).orElse(true)) {
             return;
         }
 
@@ -75,7 +75,7 @@ public class BattleArenaListener implements Listener {
         Arena arena = event.getArena();
 
         // Statistic tracking is disabled
-        if (!arena.option(BattleArenaHandler.TRACK_STATISTICS).map(BooleanArenaOption::isEnabled).orElse(true)) {
+        if (!arena.option(BattleArenaHandler.TRACK_STATISTICS_OPTION).map(BooleanArenaOption::isEnabled).orElse(true)) {
             return;
         }
 
