@@ -65,7 +65,7 @@ public record DamageIndicators(
 
             ArmorStand indicator = damaged.getWorld().spawn(damaged.getLocation().clone().add(xRand, yRand, zRand), ArmorStand.class, entity -> {
                 entity.customName(this.damageIndicators.format.replaceText(builder ->
-                        builder.matchLiteral("{damage}").once().replacement(Component.text(Util.DAMAGE_FORMAT.format(event.getFinalDamage())))
+                        builder.matchLiteral("%damage%").once().replacement(Component.text(Util.DAMAGE_FORMAT.format(event.getFinalDamage())))
                 ));
 
                 entity.setCustomNameVisible(true);

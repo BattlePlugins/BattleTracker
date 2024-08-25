@@ -14,4 +14,4 @@ enabled: true
 disabled-worlds: []
 
 # The format of the damage indicator displays.
-format: "<red>{damage} <dark_red>❤"
+format: "<red>%damage% <dark_red>❤"
