@@ -5,6 +5,7 @@ import org.battleplugins.tracker.feature.Feature;
 import org.battleplugins.tracker.feature.battlearena.BattleArenaFeature;
 import org.battleplugins.tracker.feature.combatlog.CombatLog;
 import org.battleplugins.tracker.feature.damageindicators.DamageIndicators;
+import org.battleplugins.tracker.feature.placeholderapi.PlaceholderApiFeature;
 import org.battleplugins.tracker.message.Messages;
 import org.battleplugins.tracker.sql.SqlSerializer;
 import org.battleplugins.tracker.sql.TrackerSqlSerializer;
@@ -54,6 +55,8 @@ public class BattleTracker extends JavaPlugin {
     private final Map<Tracker, List<Listener>> trackerListeners = new HashMap<>();
 
     private BattleArenaFeature battleArenaFeature;
+    private PlaceholderApiFeature placeholderApiFeature;
+
     private CombatLog combatLog;
     private DamageIndicators damageIndicators;
 
@@ -144,6 +147,9 @@ public class BattleTracker extends JavaPlugin {
 
         this.battleArenaFeature = new BattleArenaFeature();
         this.battleArenaFeature.onEnable(this);
+
+        this.placeholderApiFeature = new PlaceholderApiFeature();
+        this.placeholderApiFeature.onEnable(this);
     }
 
     @Override
@@ -158,6 +164,10 @@ public class BattleTracker extends JavaPlugin {
     private CompletableFuture<Void> disable(boolean block) {
         if (this.battleArenaFeature != null) {
             this.unloadFeature(this.battleArenaFeature);
+        }
+
+        if (this.placeholderApiFeature != null) {
+            this.unloadFeature(this.placeholderApiFeature);
         }
 
         if (this.combatLog != null) {
@@ -266,7 +276,7 @@ public class BattleTracker extends JavaPlugin {
      * @param tracker the tracker to register
      */
     public void registerTracker(Tracker tracker) {
-        this.trackers.put(tracker.getName(), tracker);
+        this.trackers.put(tracker.getName().toLowerCase(Locale.ROOT), tracker);
     }
 
     /**
@@ -319,7 +329,7 @@ public class BattleTracker extends JavaPlugin {
      */
     @Nullable
     public Tracker getTracker(String name) {
-        return this.trackers.get(name);
+        return this.trackers.get(name.toLowerCase(Locale.ROOT));
     }
 
     /**

@@ -21,7 +21,6 @@ import org.bukkit.util.StringUtil;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.text.DecimalFormat;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -313,19 +312,17 @@ public class TrackerExecutor implements TabExecutor {
     }
 
     private void versus0(CommandSender sender, OfflinePlayer player1, Record record1, OfflinePlayer player2, Record record2, VersusTally tally) {
-        DecimalFormat format = new DecimalFormat("0.##");
-
         Messages.send(sender, "header", Messages.getPlain("versus-tally"));
         Messages.send(sender, "versus", Map.of(
                 "player", record1.getName(),
                 "target", record2.getName(),
-                "player_rating", format.format(record1.getRating()),
-                "target_rating", format.format(record2.getRating())
+                "player_rating", Util.STAT_FORMAT.format(record1.getRating()),
+                "target_rating", Util.STAT_FORMAT.format(record2.getRating())
         ));
 
         Map<String, Object> replacements = new HashMap<>();
-        replacements.put("kills", format.format(tally.getStat(StatType.KILLS)));
-        replacements.put("deaths", format.format(tally.getStat(StatType.DEATHS)));
+        replacements.put("kills", Util.STAT_FORMAT.format(tally.getStat(StatType.KILLS)));
+        replacements.put("deaths", Util.STAT_FORMAT.format(tally.getStat(StatType.DEATHS)));
 
         // Since versus tallies are only stored one way, we need to flip the value
         // in the scenario that the "1st" player instead the 2nd player

@@ -20,6 +20,7 @@ repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
     maven("https://repo.battleplugins.org/releases/")
     maven("https://repo.battleplugins.org/snapshots/")
+    maven("https://repo.extendedclip.com/content/repositories/placeholderapi/")
 }
 
 dependencies {
@@ -29,6 +30,7 @@ dependencies {
 
     compileOnlyApi(libs.paper.api)
     compileOnlyApi(libs.battlearena)
+    compileOnlyApi(libs.placeholderapi)
 }
 
 java {

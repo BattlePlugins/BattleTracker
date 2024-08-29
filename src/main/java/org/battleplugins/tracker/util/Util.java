@@ -21,6 +21,8 @@ public final class Util {
     public static final DecimalFormat HEALTH_FORMAT = new DecimalFormat("0.00");
     public static final DecimalFormat DAMAGE_FORMAT = new DecimalFormat("#.##");
 
+    public static final DecimalFormat STAT_FORMAT = new DecimalFormat("0.##");
+
     public static String formatHealth(double health, boolean loss) {
         return (loss ? "-" : "+") + HEALTH_FORMAT.format(health);
     }
@@ -31,13 +33,12 @@ public final class Util {
     }
 
     public static void sendTrackerMessage(CommandSender sender, String messageKey, int ranking, Record record) {
-        DecimalFormat format = new DecimalFormat("0.##");
         Map<String, Object> replacements = new HashMap<>(StatType.values()
                 .stream()
                 .map(stat -> new AbstractMap.SimpleEntry<>(stat, record.getStat(stat)))
                 .collect(
                         LinkedHashMap::new,
-                        (map, entry) -> map.put(entry.getKey().getKey(), format.format(entry.getValue())),
+                        (map, entry) -> map.put(entry.getKey().getKey(), STAT_FORMAT.format(entry.getValue())),
                         Map::putAll
                 )
         );
