@@ -56,7 +56,7 @@ class BattleTrackerListener implements Listener {
             if (this.plugin.isDebugMode()) {
                 long startTimestamp = System.currentTimeMillis();
 
-                saveFuture.thenRun(() -> this.plugin.info("Saved data for {} in {}ms", player.getName(), System.currentTimeMillis() - startTimestamp));
+                saveFuture.thenRun(() -> this.plugin.info("Saved {} data for {} in {}ms", tracker.getName(), player.getName(), System.currentTimeMillis() - startTimestamp));
             }
 
             if (Bukkit.isStopping()) {

@@ -7,6 +7,7 @@ import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.battleplugins.tracker.BattleTracker;
 import org.battleplugins.tracker.util.MessageUtil;
+import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -36,6 +37,19 @@ public class Messages {
 
             Component message = MessageUtil.MINI_MESSAGE.deserialize(messageText);
             MESSAGES.put(key, message);
+        }
+
+        boolean newMessages = false;
+
+        // 08-28-2024
+        newMessages |= addMessage(messagesConfig, "rank-arena-stats", "<yellow>Arena Statistics:</yellow>");
+
+        if (newMessages) {
+            try {
+                messagesConfig.save(messagesFile);
+            } catch (Exception e) {
+                BattleTracker.getInstance().warn("Failed to save new messages to messages file!");
+            }
         }
     }
 
@@ -153,5 +167,14 @@ public class Messages {
 
         component = component.children(children);
         return component;
+    }
+
+    private static boolean addMessage(Configuration configuration, String key, String message) {
+        if (configuration.contains(key)) {
+            return false;
+        }
+
+        configuration.set(key, message);
+        return true;
     }
 }

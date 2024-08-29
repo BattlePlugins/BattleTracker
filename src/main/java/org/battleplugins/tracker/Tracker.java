@@ -49,6 +49,15 @@ public interface Tracker {
     CompletableFuture<List<Record>> getTopRecords(int limit, StatType orderBy);
 
     /**
+     * Returns additional stats that are tracked by this tracker. These are
+     * typically populated by third party trackers that wish to track stats
+     * that are not included in BattleTracker by default.
+     *
+     * @return additional stats that are tracked by this tracker
+     */
+    List<StatType> getAdditionalStats();
+
+    /**
      * Returns the record for the given Player.
      *
      * @param player the Player to get the record from

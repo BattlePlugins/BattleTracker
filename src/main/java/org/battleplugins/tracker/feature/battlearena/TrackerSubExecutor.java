@@ -1,6 +1,7 @@
 package org.battleplugins.tracker.feature.battlearena;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import org.battleplugins.arena.Arena;
 import org.battleplugins.arena.command.ArenaCommand;
 import org.battleplugins.arena.command.Argument;
@@ -92,5 +93,11 @@ public class TrackerSubExecutor implements SubCommandExecutor {
 
     private void rank(CommandSender sender, Record record) {
         Util.sendTrackerMessage(sender, "rank-arena", -1, record);
+        if (!this.tracker.getAdditionalStats().isEmpty()) {
+            Messages.send(sender, "rank-arena-stats");
+            for (StatType stat : this.tracker.getAdditionalStats()) {
+                sender.sendMessage(Component.text("- ", NamedTextColor.GRAY).append(Component.text(stat.getName() + ": ", NamedTextColor.RED)).append(Component.text(Util.STAT_FORMAT.format(record.getStat(stat)), NamedTextColor.GOLD)));
+            }
+        }
     }
 }

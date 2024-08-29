@@ -6,6 +6,7 @@ import org.battleplugins.arena.ArenaPlayer;
 import org.battleplugins.arena.competition.JoinResult;
 import org.battleplugins.arena.competition.LiveCompetition;
 import org.battleplugins.arena.competition.phase.CompetitionPhaseType;
+import org.battleplugins.arena.event.BattleArenaPostInitializeEvent;
 import org.battleplugins.arena.event.BattleArenaReloadEvent;
 import org.battleplugins.arena.event.BattleArenaReloadedEvent;
 import org.battleplugins.arena.event.arena.ArenaCreateExecutorEvent;
@@ -15,7 +16,10 @@ import org.battleplugins.arena.event.arena.ArenaVictoryEvent;
 import org.battleplugins.arena.event.player.ArenaKillEvent;
 import org.battleplugins.arena.event.player.ArenaLeaveEvent;
 import org.battleplugins.arena.event.player.ArenaPreJoinEvent;
+import org.battleplugins.arena.event.player.ArenaStatChangeEvent;
 import org.battleplugins.arena.options.types.BooleanArenaOption;
+import org.battleplugins.arena.stat.ArenaStat;
+import org.battleplugins.arena.stat.ArenaStats;
 import org.battleplugins.tracker.BattleTracker;
 import org.battleplugins.tracker.SqlTracker;
 import org.battleplugins.tracker.TrackedDataType;
@@ -44,6 +48,20 @@ public class BattleArenaListener implements Listener {
 
     public BattleArenaListener(BattleTracker battleTracker) {
         this.battleTracker = battleTracker;
+    }
+
+    @EventHandler
+    public void onBattleArenaPostInitialize(BattleArenaPostInitializeEvent event) {
+        for (ArenaStat<?> stat : ArenaStats.values()) {
+            String statKey = stat.getKey().replace("-", "_");
+            // There may be some crossover with stats (i.e. kills, deaths, etc.), so ensure
+            // we don't have any duplicates before proceeding
+            if (StatType.get(statKey) != null) {
+                continue;
+            }
+
+            StatType.create(statKey, stat.getName(), true);
+        }
     }
 
     @EventHandler
@@ -337,6 +355,48 @@ public class BattleArenaListener implements Listener {
 
             if (victorRating > victorMaxRating) {
                 tracker.setValue(StatType.MAX_RATING, victorRating, bukkitPlayer);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onStatChange(ArenaStatChangeEvent<?> event) {
+        if (!(event.getOldValue() instanceof Number) || !(event.getNewValue() instanceof Number)) {
+            return;
+        }
+
+        Tracker tracker = this.battleTracker.getTracker(event.getArena().getName());
+        if (tracker == null) {
+            return;
+        }
+
+        if (!(event.getStatHolder() instanceof ArenaPlayer arenaPlayer)) {
+            return;
+        }
+
+        Record record = tracker.getRecord(arenaPlayer.getPlayer());
+        if (!record.isTracking()) {
+            return;
+        }
+
+        List<BattleArenaHandler.StatInfo> trackedStats = BattleArenaHandler.getTrackedStats(event.getArena());
+        for (BattleArenaHandler.StatInfo info : trackedStats) {
+            if (!info.stat().equals(event.getStat())) {
+                continue;
+            }
+
+            Number oldValue = (Number) event.getOldValue();
+            Number newValue = (Number) event.getNewValue();
+
+            switch (info.type()) {
+                case ADD -> {
+                    float delta = newValue.floatValue() - oldValue.floatValue();
+                    record.setValue(info.statType(), record.getStat(info.statType()) + delta);
+                }
+                case REMOVE -> {
+                    float delta = oldValue.floatValue() - newValue.floatValue();
+                    record.setValue(info.statType(), record.getStat(info.statType()) - delta);
+                }
             }
         }
     }

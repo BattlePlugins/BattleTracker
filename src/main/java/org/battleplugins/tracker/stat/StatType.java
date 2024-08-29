@@ -54,6 +54,10 @@ public final class StatType {
     }
 
     public static StatType create(String key, String name, boolean tracked) {
+        if (STAT_TYPES.containsKey(key)) {
+            throw new IllegalArgumentException("Stat type with key " + key + " already exists!");
+        }
+
         return new StatType(key, name, tracked);
     }
 

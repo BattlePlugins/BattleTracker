@@ -456,6 +456,9 @@ public class BattleTracker extends JavaPlugin {
         Configuration config = YamlConfiguration.loadConfiguration(configFile);
         try {
             this.config = BattleTrackerConfig.load(config);
+            if (config.getBoolean("debug-mode", false)) {
+                this.debugMode = true;
+            }
         } catch (Exception e) {
             this.error("Failed to load BattleTracker configuration!", e);
             if (!reload) {

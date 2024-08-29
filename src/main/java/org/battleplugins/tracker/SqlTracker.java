@@ -27,8 +27,8 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
 public class SqlTracker implements Tracker {
-    private final BattleTracker plugin;
-    private final String name;
+    protected final BattleTracker battleTracker;
+    protected final String name;
     private final RatingCalculator calculator;
     private final Set<TrackedDataType> trackedData;
     private final List<String> disabledWorlds;
@@ -42,12 +42,12 @@ public class SqlTracker implements Tracker {
 
     private long lastTopLoad = 0;
 
-    public SqlTracker(BattleTracker plugin, String name, RatingCalculator calculator, Set<TrackedDataType> trackedData, List<String> disabledWorlds) {
-        this(plugin, name, calculator, trackedData, disabledWorlds, null);
+    public SqlTracker(BattleTracker battleTracker, String name, RatingCalculator calculator, Set<TrackedDataType> trackedData, List<String> disabledWorlds) {
+        this(battleTracker, name, calculator, trackedData, disabledWorlds, null);
     }
 
-    public SqlTracker(BattleTracker plugin, String name, RatingCalculator calculator, Set<TrackedDataType> trackedData, List<String> disabledWorlds, TrackerSqlSerializer sqlSerializer) {
-        this.plugin = plugin;
+    public SqlTracker(BattleTracker battleTracker, String name, RatingCalculator calculator, Set<TrackedDataType> trackedData, List<String> disabledWorlds, TrackerSqlSerializer sqlSerializer) {
+        this.battleTracker = battleTracker;
         this.name = name;
         this.calculator = calculator;
         this.trackedData = trackedData;
@@ -76,7 +76,7 @@ public class SqlTracker implements Tracker {
     @Override
     public CompletableFuture<@Nullable Record> getRecord(OfflinePlayer player) {
         return this.records.getOrLoad(player.getUniqueId(), this.sqlSerializer.loadRecord(player.getUniqueId())).exceptionally(e -> {
-            this.plugin.error("Failed to load record for {}", player.getUniqueId(), e);
+            this.battleTracker.error("Failed to load record for {}", player.getUniqueId(), e);
             return null;
         });
     }
@@ -98,6 +98,11 @@ public class SqlTracker implements Tracker {
                 .limit(limit)
                 .toList()
         );
+    }
+
+    @Override
+    public List<StatType> getAdditionalStats() {
+        return List.of();
     }
 
     @Override
@@ -125,7 +130,7 @@ public class SqlTracker implements Tracker {
     public CompletableFuture<VersusTally> getVersusTally(OfflinePlayer player1, OfflinePlayer player2) {
         return this.tallies.getOrLoad(tally -> tally.isTallyFor(player1.getUniqueId(), player2.getUniqueId()), this.sqlSerializer.loadVersusTally(player1.getUniqueId(), player2.getUniqueId())
                 .exceptionally(e -> {
-                    this.plugin.error("Failed to load tally entries for {} and {}", player1.getUniqueId(), player2.getUniqueId(), e);
+                    this.battleTracker.error("Failed to load tally entries for {} and {}", player1.getUniqueId(), player2.getUniqueId(), e);
                     return null;
         }));
     }
@@ -168,7 +173,7 @@ public class SqlTracker implements Tracker {
         Record record1 = this.records.getCached(entry.id1());
         Record record2 = this.records.getCached(entry.id2());
         if (record1 == null || record2 == null) {
-            this.plugin.warn("Failed to call tally entry event for {} and {} as one of the records was not found!", entry.id1(), entry.id2());
+            this.battleTracker.warn("Failed to call tally entry event for {} and {} as one of the records was not found!", entry.id1(), entry.id2());
             return;
         }
 
@@ -184,7 +189,7 @@ public class SqlTracker implements Tracker {
 
             return entries.stream().filter(entry -> entry.id1().equals(uuid)).toList();
         }).exceptionally(e -> {
-            this.plugin.error("Failed to load tally entries for {}", uuid, e);
+            this.battleTracker.error("Failed to load tally entries for {}", uuid, e);
             return List.of();
         });
     }
@@ -287,7 +292,7 @@ public class SqlTracker implements Tracker {
         this.features.put(feature.getClass(), feature);
 
         if (feature.enabled()) {
-            feature.onEnable(this.plugin, this);
+            feature.onEnable(this.battleTracker, this);
         }
     }
 
