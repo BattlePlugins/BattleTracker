@@ -80,7 +80,7 @@ public class BattleArenaListener implements Listener {
                     e.printStackTrace();
                 }
 
-                tracker.destroy();
+                tracker.destroy(false);
             });
 
             this.battleTracker.unregisterTracker(tracker);

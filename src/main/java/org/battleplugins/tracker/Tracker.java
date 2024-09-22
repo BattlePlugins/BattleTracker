@@ -351,5 +351,5 @@ public interface Tracker {
     /**
      * Destroys the tracker.
      */
-    void destroy();
+    void destroy(boolean block);
 }

@@ -186,7 +186,7 @@ public class BattleTracker extends JavaPlugin {
                 listeners.forEach(HandlerList::unregisterAll);
             }
 
-            saveFutures.add(tracker.saveAll().thenRun(tracker::destroy));
+            saveFutures.add(tracker.saveAll().thenRun(() -> tracker.destroy(block)));
         }
 
         CompletableFuture<Void> future = CompletableFuture.allOf(saveFutures.toArray(CompletableFuture[]::new))

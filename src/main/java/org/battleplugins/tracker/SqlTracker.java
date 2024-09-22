@@ -25,6 +25,7 @@ import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class SqlTracker implements Tracker {
     protected final BattleTracker battleTracker;
@@ -334,11 +335,21 @@ public class SqlTracker implements Tracker {
     }
 
     @Override
-    public void destroy() {
-        try {
-            this.sqlSerializer.closeConnection(this.sqlSerializer.getConnection());
-        } catch (SQLException e) {
-            throw new RuntimeException("Failed to close connection!", e);
+    public void destroy(boolean block) {
+        Supplier<Void> destroyRunnable = () -> {
+            try {
+                this.sqlSerializer.closeConnection(this.sqlSerializer.getConnection());
+            } catch (SQLException e) {
+                throw new RuntimeException("Failed to close connection!", e);
+            }
+
+            return null;
+        };
+
+        if (block) {
+            destroyRunnable.get();
+        } else {
+            CompletableFuture.supplyAsync(destroyRunnable);
         }
     }
 }
