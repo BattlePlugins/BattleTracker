@@ -1,16 +1,8 @@
 package org.battleplugins.tracker.sql;
 
-import org.apache.commons.dbcp2.ConnectionFactory;
-import org.apache.commons.dbcp2.DriverManagerConnectionFactory;
-import org.apache.commons.dbcp2.PoolableConnection;
-import org.apache.commons.dbcp2.PoolableConnectionFactory;
-import org.apache.commons.dbcp2.PoolingDataSource;
-import org.apache.commons.pool2.impl.GenericObjectPool;
-import org.apache.commons.pool2.impl.GenericObjectPoolConfig;
+import org.battleplugins.tracker.BattleTracker;
 
-import javax.sql.DataSource;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -48,98 +40,30 @@ public abstract class SqlSerializer {
         }
     }
 
-    private DataSource dataSource;
-
-    protected String db = "minecraft";
-    protected SqlType type = SqlType.MYSQL;
-
-    protected String url = "localhost";
-    protected String port = "3306";
-    protected String username = "root";
-    protected String password = "";
-
-    private String createDatabase = "CREATE DATABASE IF NOT EXISTS `" + db + "`";
-
-    public String getUrl() {
-        return this.url;
-    }
-
-    public void setUrl(String url) {
-        this.url = url;
-    }
-
-    public String getPort() {
-        return this.port;
-    }
-
-    public void setPort(String port) {
-        this.port = port;
-    }
-
-    public String getUsername() {
-        return this.username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return this.password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public void setType(SqlType type) {
-        this.type = type;
-    }
-
-    public SqlType getType() {
-        return this.type;
-    }
-
-    public String getDb() {
-        return this.db;
-    }
-
-    public void setDb(String db) {
-        this.db = db;
-        this.createDatabase = "CREATE DATABASE IF NOT EXISTS `" + db + "`";
+    public SqlSerializer() {
     }
 
     public record ResultSetConnection(ResultSet rs, Connection con) {
     }
 
-    protected void close(ResultSetConnection rscon) {
-        try {
-            rscon.rs.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public SqlType getType() {
+        return SqlInstance.getInstance().getType();
     }
 
-    public Connection getConnection(boolean displayErrors) throws SQLException {
-        return this.getConnection(displayErrors, true);
-    }
-
-    public Connection getConnection() throws SQLException {
+    public Connection getConnection() {
         return this.getConnection(true, true);
     }
 
-    public Connection getConnection(boolean displayErrors, boolean autoCommit) throws SQLException {
-        if (this.dataSource == null) {
-            throw new java.sql.SQLException("Connection is null.  Did you intiliaze your SQL connection?");
-        }
-
+    public Connection getConnection(boolean displayErrors, boolean autoCommit) {
         try {
-            Connection con = this.dataSource.getConnection();
-            con.setAutoCommit(autoCommit);
-            return con;
-        } catch (SQLException e1) {
-            if (displayErrors)
-                e1.printStackTrace();
+            Connection connection = SqlInstance.getInstance().getDataSource().getConnection();
+            connection.setAutoCommit(autoCommit);
+            return connection;
+        } catch (SQLException e) {
+            if (displayErrors) {
+                BattleTracker.getInstance().error("Could not get connection to SQL database", e);
+            }
+
             return null;
         }
     }
@@ -152,7 +76,7 @@ public abstract class SqlSerializer {
         try {
             rscon.con.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Could not close connection to SQL database", e);
         }
     }
 
@@ -164,88 +88,18 @@ public abstract class SqlSerializer {
         try {
             con.close();
         } catch (SQLException e) {
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Could not close connection to SQL database", e);
         }
     }
 
     protected boolean init() {
-        Connection con = null;  // Our database connection
-        try {
-            Class.forName(this.type.getDriver());
-        } catch (ClassNotFoundException e1) {
-            e1.printStackTrace();
-            return false;
-        }
-
-        String connectionString;
-        String datasourceString;
-        int minIdle;
-        int maxActive;
-        switch (this.type) {
-            case SQLITE:
-                datasourceString = connectionString = "jdbc:sqlite:" + this.url + "/" + this.db + ".sqlite";
-                maxActive = 1;
-                minIdle = -1;
-                break;
-            case MYSQL:
-            default:
-                minIdle = 10;
-                maxActive = 20;
-                datasourceString = "jdbc:mysql://" + this.url + ":" + this.port + "/" + this.db + "?autoReconnect=true";
-                connectionString = "jdbc:mysql://" + this.url + ":" + this.port + "?autoReconnect=true";
-                break;
-        }
-
-        try {
-            this.dataSource = setupDataSource(datasourceString, this.username, this.password, minIdle, maxActive);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
-
-        if (this.type == SqlType.MYSQL) {
-            String strStmt = this.createDatabase;
-            try {
-                con = DriverManager.getConnection(connectionString, this.username, this.password);
-                Statement st = con.createStatement();
-                st.executeUpdate(strStmt);
-            } catch (SQLException e) {
-                e.printStackTrace();
-                return false;
-            } finally {
-                this.closeConnection(con);
-            }
-        }
-
         return true;
-    }
-    
-    public static PoolingDataSource<PoolableConnection> setupDataSource(String connectURI, String username, String password,
-                                                                        int minIdle, int maxTotal) {
-        ConnectionFactory connectionFactory = new DriverManagerConnectionFactory(connectURI, username, password);
-        PoolableConnectionFactory factory = new PoolableConnectionFactory(connectionFactory, null);
-        factory.setValidationQuery("SELECT 1");
-
-        GenericObjectPoolConfig<PoolableConnection> poolConfig = new GenericObjectPoolConfig<>();
-        if (minIdle != -1) {
-            poolConfig.setMinIdle(minIdle);
-        }
-
-        poolConfig.setMaxTotal(maxTotal);
-        poolConfig.setTestOnBorrow(true); // Test before the connection is made
-
-        // Object pool
-        GenericObjectPool<PoolableConnection> connectionPool = new GenericObjectPool<>(factory, poolConfig);
-        factory.setPool(connectionPool);
-
-        // Pooling data source
-        return new PoolingDataSource<>(connectionPool);
     }
 
     protected boolean createTable(String tableName, String sqlCreateTable, String... sqlUpdates) {
         // Check to see if our table exists;
         Boolean exists;
-        if (this.type == SqlType.SQLITE) {
+        if (SqlInstance.getInstance().getType() == SqlType.SQLITE) {
             exists = this.getBoolean("SELECT count(name) FROM sqlite_master WHERE type='table' AND name='" + tableName + "';");
         } else {
             List<Object> objs = this.getObjects("SHOW TABLES LIKE '" + tableName + "';");
@@ -260,19 +114,13 @@ public abstract class SqlSerializer {
         String strStmt = sqlCreateTable;
         Statement statement;
         int result = 0;
-        Connection connection;
-        try {
-            connection = this.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+        Connection connection = this.getConnection();
 
         try {
             statement = connection.createStatement();
             result = statement.executeUpdate(strStmt);
         } catch (SQLException e) {
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Could not create table {} (error result: {})", tableName, result, e);
             this.closeConnection(connection);
             return false;
         }
@@ -288,7 +136,7 @@ public abstract class SqlSerializer {
                     statement = connection.createStatement();
                     result = statement.executeUpdate(strStmt);
                 } catch (SQLException e) {
-                    e.printStackTrace();
+                    BattleTracker.getInstance().error("Could not create table {} (error result: {})", tableName, result, e);
                     this.closeConnection(connection);
                     return false;
                 }
@@ -309,11 +157,12 @@ public abstract class SqlSerializer {
     protected Boolean hasColumn(String table, String column) {
         String statement;
         Boolean columnExists;
+        SqlType type = SqlInstance.getInstance().getType();
         switch (type) {
             case MYSQL:
                 statement = "SELECT COUNT(*) FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = ? " +
                         "AND TABLE_NAME = ? AND COLUMN_NAME = ?";
-                columnExists = this.getBoolean(true, 2, statement, db, table, column);
+                columnExists = this.getBoolean(true, 2, statement, SqlInstance.getInstance().getDatabase(), table, column);
                 return columnExists != null && columnExists;
             case SQLITE:
                 // After hours, I have discovered that SQL can NOT bind tables...
@@ -333,7 +182,7 @@ public abstract class SqlSerializer {
 
     protected Boolean hasTable(String tableName) {
         Boolean exists;
-        if (type == SqlType.SQLITE) {
+        if (SqlInstance.getInstance().getType() == SqlType.SQLITE) {
             exists = this.getBoolean("SELECT count(name) FROM sqlite_master WHERE type='table' AND name='" + tableName + "'");
         } else {
             List<Object> objs = this.getObjects("SHOW TABLES LIKE '" + tableName + "';");
@@ -353,17 +202,8 @@ public abstract class SqlSerializer {
      * @param varArgs the arguments to pass into the statement
      * @return the ResultSetConnection
      */
-    protected ResultSetConnection executeQuery(boolean displayErrors, Integer timeoutSeconds,
-                                               String strRawStmt, Object... varArgs) {
-        Connection con;
-        try {
-            con = this.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        }
-
-        return this.executeQuery(con, displayErrors, timeoutSeconds, strRawStmt, varArgs);
+    protected ResultSetConnection executeQuery(boolean displayErrors, Integer timeoutSeconds, String strRawStmt, Object... varArgs) {
+        return this.executeQuery(this.getConnection(), displayErrors, timeoutSeconds, strRawStmt, varArgs);
     }
 
     /**
@@ -385,7 +225,7 @@ public abstract class SqlSerializer {
             result = new ResultSetConnection(rs, con);
         } catch (Exception e) {
             if (displayErrors) {
-                e.printStackTrace();
+                BattleTracker.getInstance().error("Could not execute query {}", strRawStmt, e);
             }
         }
         return result;
@@ -397,36 +237,30 @@ public abstract class SqlSerializer {
                 try {
                     this.executeUpdate(strRawStmt, varArgs);
                 } catch (Exception e) {
-                    e.printStackTrace();
+                    BattleTracker.getInstance().error("Could not execute update {}", strRawStmt, e);
                 }
             });
         } else {
             try {
                 this.executeUpdate(strRawStmt, varArgs);
             } catch (Exception e) {
-                e.printStackTrace();
+                BattleTracker.getInstance().error("Could not execute update {}", strRawStmt, e);
             }
         }
     }
 
     protected int executeUpdate(String strRawStmt, Object... varArgs) {
         int result = -1;
-        Connection con;
-        try {
-            con = getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return -1;
-        }
+        Connection connection = this.getConnection();
 
         PreparedStatement ps;
         try {
-            ps = this.getStatement(strRawStmt, con, varArgs);
+            ps = this.getStatement(strRawStmt, connection, varArgs);
             result = ps.executeUpdate();
         } catch (Exception e) {
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Could not execute update {} (result: {})", strRawStmt, result, e);
         } finally {
-            this.closeConnection(con);
+            this.closeConnection(connection);
         }
 
         return result;
@@ -450,23 +284,17 @@ public abstract class SqlSerializer {
     }
 
     protected void executeBatch(String updateStatement, List<List<Object>> batch) {
-        Connection con;
-        try {
-            con = this.getConnection();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return;
-        }
+        Connection con = this.getConnection();
         PreparedStatement ps = null;
         try {
             con.setAutoCommit(false);
         } catch (Exception e) {
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Could not set auto commit to false", e);
         }
         try {
             ps = con.prepareStatement(updateStatement);
         } catch (Exception e) {
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Could not prepare statement {}", updateStatement, e);
         }
 
         for (List<Object> update : batch) {
@@ -476,15 +304,14 @@ public abstract class SqlSerializer {
                 }
                 ps.addBatch();
             } catch (Exception e) {
-                System.err.println("statement = " + ps);
-                e.printStackTrace();
+                BattleTracker.getInstance().error("Could not add batch {} (statement: {})", update, ps, e);
             }
         }
         try {
             ps.executeBatch();
             con.commit();
         } catch (Exception e) {
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Could not execute batch {}", updateStatement, e);
         } finally {
             this.closeConnection(con);
         }
@@ -503,7 +330,7 @@ public abstract class SqlSerializer {
             }
         } catch (Exception e) {
             if (displayErrors) {
-                e.printStackTrace();
+                BattleTracker.getInstance().error("Could not prepare statement {}", strRawStmt, e);
             }
         }
         return ps;
@@ -511,20 +338,22 @@ public abstract class SqlSerializer {
 
     public Double getDouble(String query, Object... varArgs) {
         ResultSetConnection rscon = this.executeQuery(query, varArgs);
-        if (rscon == null || rscon.con == null)
+        if (rscon == null || rscon.con == null) {
             return null;
+        }
+
         try {
             ResultSet rs = rscon.rs;
             while (rs.next()) {
                 return rs.getDouble(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Could not get double", e);
         } finally {
             try {
                 rscon.con.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                BattleTracker.getInstance().error("Could not close connection", e);
             }
         }
         return null;
@@ -532,20 +361,22 @@ public abstract class SqlSerializer {
 
     public Integer getInteger(String query, Object... varArgs) {
         ResultSetConnection rscon = this.executeQuery(query, varArgs);
-        if (rscon == null || rscon.con == null)
+        if (rscon == null || rscon.con == null) {
             return null;
+        }
+
         try {
             ResultSet rs = rscon.rs;
             while (rs.next()) {
                 return rs.getInt(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Could not get integer", e);
         } finally {
             try {
                 rscon.con.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                BattleTracker.getInstance().error("Could not close connection", e);
             }
         }
         return null;
@@ -553,20 +384,22 @@ public abstract class SqlSerializer {
 
     public Short getShort(String query, Object... varArgs) {
         ResultSetConnection rscon = this.executeQuery(query, varArgs);
-        if (rscon == null || rscon.con == null)
+        if (rscon == null || rscon.con == null) {
             return null;
+        }
+
         try {
             ResultSet rs = rscon.rs;
             while (rs.next()) {
                 return rs.getShort(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Could not get short", e);
         } finally {
             try {
                 rscon.con.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                BattleTracker.getInstance().error("Could not close connection", e);
             }
         }
         return null;
@@ -574,20 +407,22 @@ public abstract class SqlSerializer {
 
     public Long getLong(String query, Object... varArgs) {
         ResultSetConnection rscon = this.executeQuery(query, varArgs);
-        if (rscon == null || rscon.con == null)
+        if (rscon == null || rscon.con == null) {
             return null;
+        }
+
         try {
             ResultSet rs = rscon.rs;
             while (rs.next()) {
                 return rs.getLong(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Could not get long", e);
         } finally {
             try {
                 rscon.con.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                BattleTracker.getInstance().error("Could not close connection", e);
             }
         }
         return null;
@@ -603,6 +438,7 @@ public abstract class SqlSerializer {
         if (rscon == null || rscon.con == null) {
             return null;
         }
+
         try {
             ResultSet rs = rscon.rs;
             while (rs.next()) {
@@ -610,13 +446,14 @@ public abstract class SqlSerializer {
                 return i > 0;
             }
         } catch (SQLException e) {
-            if (displayErrors)
-                e.printStackTrace();
+            if (displayErrors) {
+                BattleTracker.getInstance().error("Could not get boolean", e);
+            }
         } finally {
             try {
                 rscon.con.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                BattleTracker.getInstance().error("Could not close connection", e);
             }
         }
         return null;
@@ -624,20 +461,22 @@ public abstract class SqlSerializer {
 
     public String getString(String query, Object... varArgs) {
         ResultSetConnection rscon = this.executeQuery(query, varArgs);
-        if (rscon == null || rscon.con == null)
+        if (rscon == null || rscon.con == null) {
             return null;
+        }
+
         try {
             ResultSet rs = rscon.rs;
             while (rs.next()) {
                 return rs.getString(1);
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Could not get string", e);
         } finally {
             try {
                 rscon.con.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                BattleTracker.getInstance().error("Could not close connection", e);
             }
         }
         return null;
@@ -645,8 +484,10 @@ public abstract class SqlSerializer {
 
     public List<Object> getObjects(String query, Object... varArgs) {
         ResultSetConnection rscon = this.executeQuery(query, varArgs);
-        if (rscon == null || rscon.con == null)
+        if (rscon == null || rscon.con == null) {
             return null;
+        }
+
         try {
             ResultSet rs = rscon.rs;
             while (rs.next()) {
@@ -659,12 +500,12 @@ public abstract class SqlSerializer {
                 return objs;
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Could not get objects", e);
         } finally {
             try {
                 rscon.con.close();
             } catch (Exception e) {
-                e.printStackTrace();
+                BattleTracker.getInstance().error("Could not close connection", e);
             }
         }
         return null;

@@ -7,8 +7,7 @@ import org.battleplugins.tracker.feature.combatlog.CombatLog;
 import org.battleplugins.tracker.feature.damageindicators.DamageIndicators;
 import org.battleplugins.tracker.feature.placeholderapi.PlaceholderApiFeature;
 import org.battleplugins.tracker.message.Messages;
-import org.battleplugins.tracker.sql.SqlSerializer;
-import org.battleplugins.tracker.sql.TrackerSqlSerializer;
+import org.battleplugins.tracker.sql.SqlInstance;
 import org.battleplugins.tracker.stat.calculator.EloCalculator;
 import org.battleplugins.tracker.stat.calculator.RatingCalculator;
 import org.battleplugins.tracker.util.CommandInjector;
@@ -159,6 +158,8 @@ public class BattleTracker extends JavaPlugin {
                 this.error("Error disabling BattleTracker!", e);
             }
         });
+
+        SqlInstance.getInstance().close();
     }
 
     private CompletableFuture<Void> disable(boolean block) {
@@ -468,17 +469,9 @@ public class BattleTracker extends JavaPlugin {
 
         BattleTrackerConfig.DatabaseOptions databaseOptions = this.config.getDatabaseOptions();
 
-        TrackerSqlSerializer.TYPE = databaseOptions.type();
-        TrackerSqlSerializer.TABLE_PREFIX = databaseOptions.prefix();
-        TrackerSqlSerializer.DATABASE = databaseOptions.db();
-        TrackerSqlSerializer.PORT = databaseOptions.port();
-        TrackerSqlSerializer.USERNAME = databaseOptions.user();
-        TrackerSqlSerializer.PASSWORD = databaseOptions.password();
-
-        if (databaseOptions.type() == SqlSerializer.SqlType.SQLITE) {
-            TrackerSqlSerializer.URL = this.getDataFolder().toString();
-        } else {
-            TrackerSqlSerializer.URL = databaseOptions.url();
+        // Database can only be initialized once; need a full restart to change it
+        if (!reload) {
+            SqlInstance.init(databaseOptions);
         }
     }
 

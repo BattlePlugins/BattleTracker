@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
-import java.util.stream.Collectors;
 
 /**
  * Main SQL serializer for Trackers.
@@ -25,17 +24,6 @@ import java.util.stream.Collectors;
  * @author alkarin_v
  */
 public class TrackerSqlSerializer extends SqlSerializer {
-
-    public static String TABLE_PREFIX;
-
-    public static String DATABASE;
-    public static String URL;
-    public static String PORT;
-    public static String USERNAME;
-    public static String PASSWORD;
-
-    public static SqlType TYPE;
-
     private static final int MAX_LENGTH = 100;
 
     private final String overallTable;
@@ -63,22 +51,16 @@ public class TrackerSqlSerializer extends SqlSerializer {
 
         this.tracker = tracker;
 
-        this.overallTable = TABLE_PREFIX + tracker.getName().toLowerCase() + "_overall";
-        this.tallyTable = TABLE_PREFIX + tracker.getName().toLowerCase() + "_tally";
-        this.versusTable = TABLE_PREFIX + tracker.getName().toLowerCase() + "_versus";
+        String tablePrefix = SqlInstance.getInstance().getTablePrefix();
+        this.overallTable = tablePrefix + tracker.getName().toLowerCase() + "_overall";
+        this.tallyTable = tablePrefix + tracker.getName().toLowerCase() + "_tally";
+        this.versusTable = tablePrefix + tracker.getName().toLowerCase() + "_versus";
 
         this.init();
     }
 
     @Override
     protected boolean init() {
-        this.setDb(DATABASE);
-        this.setType(TYPE);
-        this.setUrl(URL);
-        this.setPort(PORT);
-        this.setUsername(USERNAME);
-        this.setPassword(PASSWORD);
-
         super.init();
 
         this.setupOverallTable();
@@ -97,7 +79,7 @@ public class TrackerSqlSerializer extends SqlSerializer {
                     return this.createRecord(connection);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                BattleTracker.getInstance().error("Failed to load record for {}!", uuid, e);
             } finally {
                 this.closeConnection(connection);
             }
@@ -116,7 +98,7 @@ public class TrackerSqlSerializer extends SqlSerializer {
                     records.add(this.createRecord(connection));
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                BattleTracker.getInstance().error("Failed to load top records!", e);
             } finally {
                 this.closeConnection(connection);
             }
@@ -151,7 +133,7 @@ public class TrackerSqlSerializer extends SqlSerializer {
                     entries.add(this.createTallyEntry(connection));
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                BattleTracker.getInstance().error("Failed to load tally entries for {}!", uuid, e);
             } finally {
                 this.closeConnection(connection);
             }
@@ -182,7 +164,7 @@ public class TrackerSqlSerializer extends SqlSerializer {
                     return this.createVersusTally(connection);
                 }
             } catch (Exception e) {
-                e.printStackTrace();
+                BattleTracker.getInstance().error("Failed to load versus tally for {} and {}!", uuid1, uuid2, e);
             } finally {
                 this.closeConnection(connection);
             }
@@ -396,8 +378,7 @@ public class TrackerSqlSerializer extends SqlSerializer {
         try {
             this.createTable(this.overallTable, createStringBuilder.toString());
         } catch (Exception e) {
-            // Log.err("Failed to create tables!");
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Failed to create tables!", e);
         }
     }
 
@@ -419,8 +400,7 @@ public class TrackerSqlSerializer extends SqlSerializer {
         try {
             this.createTable(this.versusTable, createStringBuilder.toString());
         } catch (Exception e) {
-            // Log.err("Failed to create tables!");
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Failed to create tables!", e);
         }
     }
 
@@ -433,7 +413,7 @@ public class TrackerSqlSerializer extends SqlSerializer {
                 "timestamp TIMESTAMP NOT NULL, " +
                 "PRIMARY KEY (id1, id2, timestamp)";
 
-        if (this.type == SqlType.MYSQL) {
+        if (this.getType() == SqlType.MYSQL) {
             createTally += ", INDEX (id1), INDEX (id2))";
         } else {
             createTally += ")";
@@ -441,24 +421,13 @@ public class TrackerSqlSerializer extends SqlSerializer {
 
         try {
             this.createTable(this.tallyTable, createTally);
-            if (this.type == SqlType.SQLITE) {
+            if (this.getType() == SqlType.SQLITE) {
                 this.executeUpdate("CREATE INDEX IF NOT EXISTS id1_index ON " + this.tallyTable + " (id1)");
                 this.executeUpdate("CREATE INDEX IF NOT EXISTS id2_index ON " + this.tallyTable + " (id2)");
             }
         } catch (Exception e) {
-            // Log.err("Failed to create tables!");
-            e.printStackTrace();
+            BattleTracker.getInstance().error("Failed to create tables!");
         }
-    }
-
-    private static <T> CompletableFuture<T> supplyAsync(SqlSupplier<T> supplier) {
-        return CompletableFuture.supplyAsync(() -> {
-            try {
-                return supplier.get();
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        });
     }
 
     public interface SqlSupplier<T> {

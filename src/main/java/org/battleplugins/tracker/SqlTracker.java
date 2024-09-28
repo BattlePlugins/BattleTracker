@@ -337,12 +337,7 @@ public class SqlTracker implements Tracker {
     @Override
     public void destroy(boolean block) {
         Supplier<Void> destroyRunnable = () -> {
-            try {
-                this.sqlSerializer.closeConnection(this.sqlSerializer.getConnection());
-            } catch (SQLException e) {
-                throw new RuntimeException("Failed to close connection!", e);
-            }
-
+            this.sqlSerializer.closeConnection(this.sqlSerializer.getConnection());
             return null;
         };
 
