@@ -10,7 +10,11 @@ plugins {
 group = "org.battleplugins.tracker"
 version = "4.0.0-SNAPSHOT"
 
-val supportedVersions = listOf("1.19.4", "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6", "1.21")
+val supportedVersions = listOf(
+    "1.19.4",
+    "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6",
+    "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4"
+)
 
 java.toolchain.languageVersion.set(JavaLanguageVersion.of(17))
 
