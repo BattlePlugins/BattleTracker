@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.battleplugins.tracker"
-version = "4.0.0-SNAPSHOT"
+version = "4.0.0"
 
 val supportedVersions = listOf(
     "1.19.4",
