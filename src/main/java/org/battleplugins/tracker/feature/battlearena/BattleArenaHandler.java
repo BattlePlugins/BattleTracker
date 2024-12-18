@@ -81,6 +81,7 @@ public class BattleArenaHandler {
 
     public enum Type {
         ADD,
-        REMOVE
+        REMOVE,
+        SET
     }
 }

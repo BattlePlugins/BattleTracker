@@ -397,6 +397,9 @@ public class BattleArenaListener implements Listener {
                     float delta = oldValue.floatValue() - newValue.floatValue();
                     record.setValue(info.statType(), record.getStat(info.statType()) - delta);
                 }
+                case SET -> {
+                    record.setValue(info.statType(), newValue.floatValue());
+                }
             }
         }
     }
