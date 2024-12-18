@@ -64,7 +64,7 @@ public class BattleTrackerConfig {
             String db = section.getString("db");
             String url = section.getString("url");
             String port = section.getString("port");
-            String user = section.getString("user");
+            String user = section.getString("username");
             String password = section.getString("password");
             return new DatabaseOptions(type, prefix, db, url, port, user, password);
         }
