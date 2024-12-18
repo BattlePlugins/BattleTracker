@@ -7,7 +7,7 @@ plugins {
     id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
-group = "org.battleplugins.tracker"
+group = "org.battleplugins"
 version = "4.0.1-SNAPSHOT"
 
 val supportedVersions = listOf(
@@ -94,7 +94,7 @@ publishing {
 
         publications {
             create<MavenPublication>("mavenJava") {
-                artifactId = "arena"
+                artifactId = "tracker"
 
                 from(components["java"])
                 pom {
