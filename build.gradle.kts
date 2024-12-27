@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "org.battleplugins"
-version = "4.0.1"
+version = "4.0.2-SNAPSHOT"
 
 val supportedVersions = listOf(
     "1.19.4",
