@@ -7,6 +7,8 @@ import org.battleplugins.tracker.stat.StatType;
 import org.battleplugins.tracker.stat.TallyEntry;
 import org.battleplugins.tracker.stat.VersusTally;
 import org.jetbrains.annotations.Blocking;
+// Add for MySQL format
+import java.sql.Timestamp;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -253,10 +255,14 @@ public class TrackerSqlSerializer extends SqlSerializer {
                 String[] tallyObjectArray = new String[4];
                 tallyObjectArray[0] = entry.id1().toString();
                 tallyObjectArray[1] = entry.id2().toString();
-                tallyObjectArray[2] = Boolean.toString(entry.tie());
-                tallyObjectArray[3] = Long.toString(entry.timestamp().toEpochMilli());
+                // Required for correct boolean format in MySQL (use "1"/"0" instead of "true"/"false")
+                tallyObjectArray[2] = entry.tie() ? "1" : "0";
+                // Required because MySQL expects a DATETIME string, not a raw timestamp.
+                tallyObjectArray[3] = Timestamp.from(entry.timestamp()).toString();
 
-                tallyBatch.add(List.of(tallyObjectArray));
+                // Use Arrays.asList instead of List.of to correctly convert the String[] into a List<String>
+                // List.of(tallyObjectArray) would treat the array as a single element, causing SQL parameter mismatch
+                tallyBatch.add(java.util.Arrays.asList(tallyObjectArray));
                 batches.add(this.executeBatch(true, this.constructInsertTallyStatement(), tallyBatch));
             });
         }
@@ -316,7 +322,8 @@ public class TrackerSqlSerializer extends SqlSerializer {
         StringBuilder builder = new StringBuilder();
         switch (this.getType()) {
             case MYSQL:
-                String insertOverall = "INSERT INTO " + this.versusTable + " VALUES (?, ?, ?, ?, ";
+                // Fixed an issue where 6 values were attempted to be inserted, causing a mismatch with the expected number of columns
+                String insertOverall = "INSERT INTO " + this.versusTable + " VALUES (?, ?, ";
                 builder.append(insertOverall);
                 for (int i = 0; i < this.versusColumns.size(); i++) {
                     if ((i + 1) < this.versusColumns.size()) {
@@ -357,7 +364,8 @@ public class TrackerSqlSerializer extends SqlSerializer {
 
     private String constructInsertTallyStatement() {
         return switch (this.getType()) {
-            case MYSQL -> "INSERT INTO " + this.tallyTable + " VALUES (?, ?, ?, ?)";
+            // idk why but When disconnecting, the same row may be inserted multiple times with identical data. INSERT IGNORE avoids duplicate PRIMARY KEY errors.
+            case MYSQL -> "INSERT IGNORE INTO " + this.tallyTable + " VALUES (?, ?, ?, ?)";
             case SQLITE -> "INSERT OR REPLACE INTO " + this.tallyTable + " VALUES (?, ?, ?, ?)";
         };
     }
