@@ -7,6 +7,7 @@ import org.battleplugins.tracker.stat.StatType;
 import org.battleplugins.tracker.stat.TallyEntry;
 import org.battleplugins.tracker.stat.VersusTally;
 import org.jetbrains.annotations.Blocking;
+import java.sql.Timestamp;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -253,10 +254,12 @@ public class TrackerSqlSerializer extends SqlSerializer {
                 String[] tallyObjectArray = new String[4];
                 tallyObjectArray[0] = entry.id1().toString();
                 tallyObjectArray[1] = entry.id2().toString();
-                tallyObjectArray[2] = Boolean.toString(entry.tie());
-                tallyObjectArray[3] = Long.toString(entry.timestamp().toEpochMilli());
+                tallyObjectArray[2] = entry.tie() ? "1" : "0";
+                tallyObjectArray[3] = Timestamp.from(entry.timestamp()).toString();
 
-                tallyBatch.add(List.of(tallyObjectArray));
+                // Use Arrays.asList instead of List.of to correctly convert the String[] into a List<String>
+                // List.of(tallyObjectArray) would treat the array as a single element, causing SQL parameter mismatch
+                tallyBatch.add(java.util.Arrays.asList(tallyObjectArray));
                 batches.add(this.executeBatch(true, this.constructInsertTallyStatement(), tallyBatch));
             });
         }
@@ -316,7 +319,7 @@ public class TrackerSqlSerializer extends SqlSerializer {
         StringBuilder builder = new StringBuilder();
         switch (this.getType()) {
             case MYSQL:
-                String insertOverall = "INSERT INTO " + this.versusTable + " VALUES (?, ?, ?, ?, ";
+                String insertOverall = "INSERT INTO " + this.versusTable + " VALUES (?, ?, ";
                 builder.append(insertOverall);
                 for (int i = 0; i < this.versusColumns.size(); i++) {
                     if ((i + 1) < this.versusColumns.size()) {
@@ -357,7 +360,7 @@ public class TrackerSqlSerializer extends SqlSerializer {
 
     private String constructInsertTallyStatement() {
         return switch (this.getType()) {
-            case MYSQL -> "INSERT INTO " + this.tallyTable + " VALUES (?, ?, ?, ?)";
+            case MYSQL -> "INSERT IGNORE INTO " + this.tallyTable + " VALUES (?, ?, ?, ?)";
             case SQLITE -> "INSERT OR REPLACE INTO " + this.tallyTable + " VALUES (?, ?, ?, ?)";
         };
     }
